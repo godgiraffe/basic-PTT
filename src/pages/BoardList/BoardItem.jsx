@@ -3,7 +3,7 @@ import styled from "styled-components/macro";
 
 const BoardItemLink = styled(Link)`
   display: flex;
-  width: 600px;
+  width: 800px;
   font-size: 20px;
   line-height: 30px;
   color: #bbb;
@@ -12,7 +12,7 @@ const BoardItemLink = styled(Link)`
     background-color: #ccc;
   }
   .board-name{
-    width: 6em;
+    width: 8em;
   }
   .board-activeUser{
     width: 4em;
@@ -23,11 +23,11 @@ const BoardItemLink = styled(Link)`
 `
 
 const BoardItem = (props) => {
-  const { name, activeUser, category, title } = props;
+  const { boardId, name, activeUser, category, title } = props;
   const userColor = getUserColor(activeUser);
 
   return (
-    <BoardItemLink>
+    <BoardItemLink to={'BoardContent/boardId'}>
       <div className="board-name">{name}</div>
       <div className="board-activeUser" style={{color:userColor}}>{activeUser}</div>
       <div className="board-category">{category}</div>
