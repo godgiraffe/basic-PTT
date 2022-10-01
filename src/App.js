@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter,Routes, Route, Outlet, Link } from 'react-router-dom';
 import Layout from './pages/Layout';
-import BoardList from './pages/BoardList';
+import BoardList from './pages/BoardList/BoardList';
 
 function App() {
   return (

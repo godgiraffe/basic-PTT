@@ -3,48 +3,50 @@ import { Link } from "react-router-dom";
 import BoardItem from "./BoardItem";
 
 const BoardListContent = styled.div`
-  .actionToolbar {
-    position: fixed;
-    display: flex;
-    flex-direction: row;
-    width: 100vw;
-    max-width: 800px;
-    .btn-group {
-      padding: 0;
-      margin: 0;
-      .btn {
-        border: 1px solid #666;
-        background-color: #444;
-        color: #fff;
-        height: 100%;
-        line-height: 40px;
-        font-size: 16px;
-        padding: 8px 14px;
-        &.active,
-        &:hover {
-          border: 1px solid #ccc;
-          background-color: #bbb;
-          color: #000;
-        }
-      }
-    }
-  }
   .content {
+    position: relative;
     width: 100vw;
     max-width: 1200px;
     display: flex;
     flex-direction: row;
     gap: 160px;
-    margin-top: 40px;
     .boardList {
       max-width: 800px;
     }
   }
 `;
 
+const ActionToolbar = styled.div`
+  position: sticky;
+  top: 40px;
+  width: 100vw;
+  max-width: 1200px;
+  z-index: 1;
+  .btn-group {
+    padding: 0;
+    margin: 0;
+    background-color: #000;
+    .btn {
+      border: 1px solid #666;
+      background-color: #444;
+      color: #fff;
+      height: 100%;
+      line-height: 40px;
+      font-size: 16px;
+      padding: 8px 14px;
+      &.active,
+      &:hover {
+        border: 1px solid #ccc;
+        background-color: #bbb;
+        color: #000;
+      }
+    }
+  }
+`;
+
 const AdContent = styled.div`
   position: sticky;
-  top: 0;
+  top: 80px;
   height: 80vh;
   width: 150px;
   background-color: #ccc;
@@ -53,7 +55,7 @@ const AdContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 const BoardList = () => {
   const boardData = [
     {
@@ -791,33 +793,32 @@ const BoardList = () => {
     },
   ];
   return (
-    <BoardListContent>
-      <div className="actionToolbar">
+    <div style={{position: 'relative'}}>
+      <ActionToolbar>
         <div className="btn-group">
           <Link className="btn">熱門看板</Link>
-          <Link className="btn">分類看板</Link>
         </div>
-      </div>
-      <div className="content" style={{position:'relative'}}>
-        <div className="boardList">
-          {boardData.map((board, key) => {
-            <BoardItem />;
-            const { name, activeUser, category, title } = board;
-            return (
-              <BoardItem
-                name={name}
-                activeUser={activeUser}
-                category={category}
-                title={title}
-              />
-            );
-          })}
+      </ActionToolbar>
+      <BoardListContent>
+        <div className="content">
+          <div className="boardList">
+            {boardData.map((board, key) => {
+              <BoardItem />;
+              const { name, activeUser, category, title } = board;
+              return (
+                <BoardItem
+                  name={name}
+                  activeUser={activeUser}
+                  category={category}
+                  title={title}
+                />
+              );
+            })}
+          </div>
+          <AdContent>AD Content</AdContent>
         </div>
-        <AdContent>
-          AD Content
-        </AdContent>
-      </div>
-    </BoardListContent>
+      </BoardListContent>
+    </div>
   );
 };
 
