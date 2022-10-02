@@ -2,6 +2,7 @@ import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
 import BoardItem from "./BoardItem";
 import { useState, useEffect } from "react";
+import ActionToolbar from "../../components/ActionToolbar";
 
 const BoardListContent = styled.div`
   .content {
@@ -10,40 +11,13 @@ const BoardListContent = styled.div`
     max-width: 1200px;
     display: flex;
     flex-direction: row;
-    gap: 160px;
+    gap: 100px;
     .boardList {
       max-width: 800px;
     }
   }
 `;
 
-const ActionToolbar = styled.div`
-  position: sticky;
-  top: 40px;
-  width: 100vw;
-  max-width: 1200px;
-  z-index: 1;
-  .btn-group {
-    padding: 0;
-    margin: 0;
-    background-color: #000;
-    .btn {
-      border: 1px solid #666;
-      background-color: #444;
-      color: #fff;
-      height: 100%;
-      line-height: 40px;
-      font-size: 16px;
-      padding: 8px 14px;
-      &.active,
-      &:hover {
-        border: 1px solid #ccc;
-        background-color: #bbb;
-        color: #000;
-      }
-    }
-  }
-`;
 
 const AdContent = styled.div`
   position: sticky;
@@ -78,11 +52,7 @@ const BoardList = () => {
 
   return (
     <div style={{ position: "relative" }}>
-      <ActionToolbar>
-        <div className="btn-group">
-          <Link className="btn">熱門看板</Link>
-        </div>
-      </ActionToolbar>
+      <ActionToolbar />
       <BoardListContent>
         <div className="content">
           <div className="boardList">
