@@ -28,7 +28,14 @@ const BoardList = () => {
     fetch(API_ENDPOINT, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
-        setboardData(res.data);
+        const baordData = res.data.sort( (prevItem,nextItem) => {
+          const prevItem_activeUser = parseInt(prevItem.activeUser);
+          const nextItem_activeUser = parseInt(nextItem.activeUser);
+          if (prevItem_activeUser > nextItem_activeUser) return -1;
+          if (prevItem_activeUser < nextItem_activeUser) return 1;
+          return 0;
+        })
+        setboardData(baordData);
       })
       .catch((error) => {
         console.error("get error", error);
