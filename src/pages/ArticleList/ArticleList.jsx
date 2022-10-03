@@ -1,5 +1,4 @@
 import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ActionToolbar from "../../components/ActionToolbar";
@@ -12,14 +11,14 @@ const ArticleListContainer = styled.div`
   max-width: 1200px;
   display: flex;
   flex-direction: column;
-  .searchbar{
+  .searchbar {
     padding: 1ex 0;
-    #searchKey{
+    #searchKey {
       background-color: #222;
       border: 1px solid #333;
       padding: 0.8ex;
       color: #ccc;
-      width: 800px;
+      width: fill-available;
       font-size: 20px;
     }
   }
@@ -41,7 +40,7 @@ const ArticleListContainer = styled.div`
 const API_ENDPOINT = "http://103.251.113.51:5000/api/getArticleList";
 
 const ArticleList = (props) => {
-  const { page, searchKey } = props;
+  const { boardName, page, searchKey } = props;
   const { boardId } = useParams();
   const [articleListData, setArticleListData] = useState([]);
 
@@ -74,11 +73,11 @@ const ArticleList = (props) => {
     <>
       <ActionToolbar />
       <ArticleListContainer>
-        <div className="searchbar">
-          <input type="text" id="searchKey" placeholder="搜尋文章..."/>
-        </div>
         <div className="articleContent">
           <div className="articleList">
+            <div className="searchbar">
+              <input type="text" id="searchKey" placeholder="搜尋文章..." />
+            </div>
             {articleListData
               ? articleListData.map((article) => {
                   const {

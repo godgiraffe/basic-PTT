@@ -4,7 +4,6 @@ import styled from "styled-components";
 const StyledAdContent = styled.div`
 position: sticky;
 top: 80px;
-height: 80vh;
 width: 150px;
 background-color: #ccc;
 color: #000;

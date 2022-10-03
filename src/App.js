@@ -1,8 +1,9 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import BoardList from "./pages/BoardList/BoardList";
 import ArticleList from "./pages/ArticleList/ArticleList";
+import ArticleContent from "./pages/ArticleContent/ArticleContent";
 
 function App() {
   return (
@@ -10,9 +11,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<BoardList />}></Route>
+          <Route path="/ArticleList/:boardId" element={<ArticleList />}></Route>
           <Route
-            path="/ArticleList/:boardId"
-            element={<ArticleList />}
+            path="/ArticleContent/:boardId/:ArticleId"
+            element={<ArticleContent />}
           ></Route>
         </Route>
       </Routes>

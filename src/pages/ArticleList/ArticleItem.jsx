@@ -8,6 +8,7 @@ const StyledArticleItem = styled.div`
   color:#aaa;
   background-color: #111;
   font-size: 20px;
+  padding: 4px 8px;
   .titleContent{
     width: 800px;
     .articleTitle{
