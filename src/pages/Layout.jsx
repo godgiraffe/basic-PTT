@@ -74,7 +74,7 @@ const Layout = () => {
       <HeaderContainer>
         <div className="header">
           <Link to={"/"} className="headerTitle">
-            PTT
+            批踢踢-鄉民之力
           </Link>
           <Link className="contactInfo">Contact Info</Link>
         </div>
