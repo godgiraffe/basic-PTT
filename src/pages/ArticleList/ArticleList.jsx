@@ -7,7 +7,6 @@ import ArticleItem from "./ArticleItem";
 import AdContent from "../shared/AdContent";
 import GlobalContext from "../../contexts/GlobalContext";
 
-
 const ArticleListContainer = styled.div`
   position: relative;
   width: 100vw;
@@ -46,8 +45,11 @@ const API_ENDPOINT = "http://103.251.113.51:5000/api/getArticleList";
 const ArticleList = (props) => {
   const { page, searchKey } = props;
   const location = useLocation();
-  const { boardName, boardId: boardIdFromState, page: pageFormState } =
-    location.state || {};
+  const {
+    boardName,
+    boardId: boardIdFromState,
+    page: pageFormState,
+  } = location.state || {};
   // console.log('location', location);
 
   const { boardId } = useParams();
@@ -61,6 +63,10 @@ const ArticleList = (props) => {
   const gotoPage = pageFormState ? pageFormState : page ? page : 0;
 
   useEffect(() => {
+    fetchArticleList();
+  }, [gotoPage, pageStatus.searchKey]);
+
+  const fetchArticleList = () => {
     const headers = {
       "Content-Type": "application/json",
     };
@@ -68,7 +74,7 @@ const ArticleList = (props) => {
     const postBody = {
       boardId: boardIdFromState ? boardIdFromState : boardId,
       page: gotoPage,
-      searchKey: searchKey ? searchKey : "",
+      searchKey: pageStatus.searchKey ? pageStatus.searchKey : "",
     };
     fetch(API_ENDPOINT, {
       method: "POST",
@@ -79,9 +85,12 @@ const ArticleList = (props) => {
       .then((res) => {
         if (res.status === true) {
           setArticleListData(res.data);
-          setPageStatus({
-            nowPage: postBody.page,
-            totalPage: res.totalPage,
+          setPageStatus(prevPageStatus => {
+            return {
+              ...prevPageStatus,
+              nowPage: postBody.page,
+              totalPage: res.totalPage,
+            };
           });
         } else {
           console.error("get error", res.msg);
@@ -90,21 +99,21 @@ const ArticleList = (props) => {
       .catch((error) => {
         console.error("get error", error);
       });
-      setBoardInfo({
-        boardId: boardId,
-        boardName: boardName,
-      })
-  }, [gotoPage, searchKey]);
-
+    setBoardInfo({
+      boardId: boardId,
+      boardName: boardName,
+    });
+  };
 
   const handleSearchKeyOnKeyUp = (e) => {
     // press enter
     if (e.keyCode === 13) {
       const searchKey = e.target.value;
       setPageStatus((prevPageStatus) => {
+        console.log('')
         return {
           ...prevPageStatus,
-          searchKey,
+          searchKey: searchKey,
         };
       });
     }
