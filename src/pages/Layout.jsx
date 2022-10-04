@@ -95,7 +95,8 @@ const Layout = () => {
   const GlobalContextValue = {
     setBoardInfo: setBoardInfo,
     // API_BASEURL: "http://103.251.113.51:5000/api",
-    API_BASEURL: "http://loalhost:5000/api",
+    API_BASEURL: "http://pttwebs.com/bcc/api",
+    // API_BASEURL: "http://loalhost:5000/api",
   };
 
   useEffect(() => {
