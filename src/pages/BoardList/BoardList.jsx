@@ -14,6 +14,7 @@ const BoardListContainer = styled.div`
   gap: 100px;
   .boardList {
     max-width: 800px;
+    width: 800px;
   }
 `;
 
