@@ -42,12 +42,6 @@ const ActionToolbar = (props) => {
   const { nowPage, totalPage } = pageStatus || {};
   const prevPage = !nowPage  && nowPage===0 ? totalPage-1 : nowPage-1;
   const nextPage = !nowPage  && nowPage===0 ? -1 : nowPage+1;
-  // console.log('!pageStatus', !pageStatus);
-  // console.log('pageStatus', pageStatus);
-  // console.log('nowPage', nowPage);
-  // console.log('totalPage', totalPage);
-  // console.log('prevPage', prevPage);
-  // console.log('nextPage', nextPage);
   return (
     <StyledActionToolbar>
       <div className="btn-group">

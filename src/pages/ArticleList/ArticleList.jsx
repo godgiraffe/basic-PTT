@@ -36,6 +36,7 @@ const ArticleListContainer = styled.div`
       flex-direction: column;
       gap: 8px;
       max-width: 800px;
+      width: 800px;
     }
   }
 `;
