@@ -48,7 +48,6 @@ const ArticleList = (props) => {
     boardId: boardIdFromState,
     page: pageFormState,
   } = location.state || {};
-  // console.log('location', location);
 
   const { boardId } = useParams();
   const [articleListData, setArticleListData] = useState([]);
@@ -61,7 +60,6 @@ const ArticleList = (props) => {
   const gotoPage = pageFormState ? pageFormState : page ? page : 0;
 
   const API_ENDPOINT = `${API_BASEURL}/getArticleList`;
-  // const API_ENDPOINT = "http://103.251.113.51:5000/api/getArticleList";
 
   useEffect(() => {
     fetchArticleList();

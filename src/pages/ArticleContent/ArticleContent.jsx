@@ -68,7 +68,6 @@ const ArticleContent = () => {
   });
   const { boardId, ArticleId } = useParams();
   const API_ENDPOINT = `${API_BASEURL}/getArticle/${boardId}/${ArticleId}`;
-  // const API_ENDPOINT = `http://103.251.113.51:5000/api/getArticle/${boardId}/${ArticleId}`;
 
   useEffect(() => {
     fetch(API_ENDPOINT, { method: "GET" })
