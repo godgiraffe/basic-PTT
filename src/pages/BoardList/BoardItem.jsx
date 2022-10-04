@@ -27,7 +27,7 @@ const BoardItem = (props) => {
   const userColor = getUserColor(activeUser);
 
   return (
-    <BoardItemLink to={`ArticleList/${boardId}`}>
+    <BoardItemLink to={`ArticleList/${boardId}`} state={{boardName: name}}>
       <div className="board-name">{name}</div>
       <div className="board-activeUser" style={{color:userColor}}>{activeUser}</div>
       <div className="board-category">{category}</div>

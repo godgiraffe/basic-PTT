@@ -1,6 +1,7 @@
 import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import ActionToolbar from "../../components/ActionToolbar";
 import ArticleItem from "./ArticleItem";
 import AdContent from "../shared/AdContent";
@@ -41,17 +42,28 @@ const API_ENDPOINT = "http://103.251.113.51:5000/api/getArticleList";
 
 const ArticleList = (props) => {
   const { boardName, page, searchKey } = props;
+  const location = useLocation();
+  const { boardId: boardIdFromState, page: pageFormState } =
+    location.state || {};
   const { boardId } = useParams();
   const [articleListData, setArticleListData] = useState([]);
+  const [pageStatus, setPageStatus] = useState({
+    nowPage: 0,
+    totalPage: 0,
+    searchKey: "",
+  });
+  const gotoPage = pageFormState ? pageFormState : page ? page : 0;
+
+  console.log('location', location);
 
   useEffect(() => {
-    let headers = {
+    const headers = {
       "Content-Type": "application/json",
     };
 
     const postBody = {
-      boardId: boardId,
-      page: page ? page : 2,
+      boardId: boardIdFromState ? boardIdFromState : boardId,
+      page: gotoPage,
       searchKey: searchKey ? searchKey : "",
     };
     fetch(API_ENDPOINT, {
@@ -61,22 +73,48 @@ const ArticleList = (props) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log("ArticleListData", res);
-        setArticleListData(res.data);
+        if (res.status === true) {
+          setArticleListData(res.data);
+          setPageStatus({
+            nowPage: postBody.page,
+            totalPage: res.totalPage,
+          });
+        } else {
+          console.error("get error", res.msg);
+        }
       })
       .catch((error) => {
         console.error("get error", error);
       });
-  }, []);
+  }, [gotoPage, searchKey]);
+
+
+  const handleSearchKeyOnKeyUp = (e) => {
+    // press enter
+    if (e.keyCode === 13) {
+      const searchKey = e.target.value;
+      setPageStatus((prevPageStatus) => {
+        return {
+          ...prevPageStatus,
+          searchKey,
+        };
+      });
+    }
+  };
 
   return (
     <>
-      <ActionToolbar />
+      <ActionToolbar boardId={boardId} pageStatus={pageStatus} />
       <ArticleListContainer>
         <div className="articleContent">
           <div className="articleList">
             <div className="searchbar">
-              <input type="text" id="searchKey" placeholder="搜尋文章..." />
+              <input
+                type="text"
+                id="searchKey"
+                placeholder="搜尋文章..."
+                onKeyUp={handleSearchKeyOnKeyUp}
+              />
             </div>
             {articleListData
               ? articleListData.map((article) => {
