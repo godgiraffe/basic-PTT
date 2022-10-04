@@ -54,8 +54,6 @@ const ArticleList = (props) => {
   });
   const gotoPage = pageFormState ? pageFormState : page ? page : 0;
 
-  console.log('location', location);
-
   useEffect(() => {
     const headers = {
       "Content-Type": "application/json",
