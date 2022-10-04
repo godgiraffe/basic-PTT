@@ -1,10 +1,12 @@
 import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import ActionToolbar from "../../components/ActionToolbar";
 import ArticleItem from "./ArticleItem";
 import AdContent from "../shared/AdContent";
+import GlobalContext from "../../contexts/GlobalContext";
+
 
 const ArticleListContainer = styled.div`
   position: relative;
@@ -41,10 +43,12 @@ const ArticleListContainer = styled.div`
 const API_ENDPOINT = "http://103.251.113.51:5000/api/getArticleList";
 
 const ArticleList = (props) => {
-  const { boardName, page, searchKey } = props;
+  const { page, searchKey } = props;
   const location = useLocation();
-  const { boardId: boardIdFromState, page: pageFormState } =
+  const { boardName, boardId: boardIdFromState, page: pageFormState } =
     location.state || {};
+  // console.log('location', location);
+
   const { boardId } = useParams();
   const [articleListData, setArticleListData] = useState([]);
   const [pageStatus, setPageStatus] = useState({
@@ -52,6 +56,7 @@ const ArticleList = (props) => {
     totalPage: 0,
     searchKey: "",
   });
+  const { setBoardInfo } = useContext(GlobalContext) || {};
   const gotoPage = pageFormState ? pageFormState : page ? page : 0;
 
   useEffect(() => {
@@ -84,6 +89,10 @@ const ArticleList = (props) => {
       .catch((error) => {
         console.error("get error", error);
       });
+      setBoardInfo({
+        boardId: boardId,
+        boardName: boardName,
+      })
   }, [gotoPage, searchKey]);
 
 

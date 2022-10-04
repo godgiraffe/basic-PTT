@@ -1,5 +1,7 @@
 import styled from "styled-components/macro";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import GlobalContext from "../contexts/GlobalContext";
 
 const Wrap = styled.div`
   height: fit-content;
@@ -43,6 +45,20 @@ const HeaderContainer = styled.div`
         color: #fff;
       }
     }
+    .arrowIcon {
+      font-size: 24px;
+      color: #aaa;
+      padding: 0 5px;
+    }
+    .boardTitle {
+      color: #fff;
+      padding: 0 5px;
+      font-size: 24px;
+      .boardLabel {
+        font-size: 13px;
+        padding: 0 8px;
+      }
+    }
     .contactInfo {
       font-size: 13px;
       color: #aaaaaa;
@@ -69,20 +85,57 @@ const MainContainer = styled.div`
 `;
 
 const Layout = () => {
+  const params = useParams();
+  const [boardInfo, setBoardInfo] = useState({
+    boardName: "",
+    boardId: "",
+  });
+  const { boardId, boardName } = boardInfo;
+
+  const GlobalContextValue = {
+    setBoardInfo: setBoardInfo,
+  };
+
+  useEffect(() => {
+    if (Object.keys(params).length === 0 ){
+      setBoardInfo({
+        boardName: "",
+        boardId: "",
+      })
+    }
+  }, [params]);
+
   return (
-    <Wrap>
-      <HeaderContainer>
-        <div className="header">
-          <Link to={"/"} className="headerTitle">
-            批踢踢-鄉民之力
-          </Link>
-          <Link className="contactInfo">Contact Info</Link>
-        </div>
-      </HeaderContainer>
-      <MainContainer>
-        <Outlet />
-      </MainContainer>
-    </Wrap>
+    <GlobalContext.Provider value={GlobalContextValue}>
+      <Wrap>
+        <HeaderContainer>
+          <div className="header">
+            <Link to={"/"} className="headerTitle">
+              批踢踢-鄉民之力
+            </Link>
+            {!boardId ? (
+              ""
+            ) : (
+              <>
+                <span className="arrowIcon">›</span>
+                <Link
+                  className="boardTitle"
+                  to={`ArticleList/${boardId}`}
+                  state={{ boardName: boardName }}
+                >
+                  <span className="boardLabel">看板</span>
+                  {boardName}
+                </Link>
+              </>
+            )}
+            <Link className="contactInfo">Contact Info</Link>
+          </div>
+        </HeaderContainer>
+        <MainContainer>
+          <Outlet />
+        </MainContainer>
+      </Wrap>
+    </GlobalContext.Provider>
   );
 };
 
