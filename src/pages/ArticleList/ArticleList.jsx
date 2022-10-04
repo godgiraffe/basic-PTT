@@ -40,8 +40,6 @@ const ArticleListContainer = styled.div`
   }
 `;
 
-const API_ENDPOINT = "http://103.251.113.51:5000/api/getArticleList";
-
 const ArticleList = (props) => {
   const { page, searchKey } = props;
   const location = useLocation();
@@ -59,8 +57,11 @@ const ArticleList = (props) => {
     totalPage: 0,
     searchKey: "",
   });
-  const { setBoardInfo } = useContext(GlobalContext) || {};
+  const { setBoardInfo, API_BASEURL } = useContext(GlobalContext) || {};
   const gotoPage = pageFormState ? pageFormState : page ? page : 0;
+
+  const API_ENDPOINT = `${API_BASEURL}/getArticleList`;
+  // const API_ENDPOINT = "http://103.251.113.51:5000/api/getArticleList";
 
   useEffect(() => {
     fetchArticleList();
@@ -85,7 +86,7 @@ const ArticleList = (props) => {
       .then((res) => {
         if (res.status === true) {
           setArticleListData(res.data);
-          setPageStatus(prevPageStatus => {
+          setPageStatus((prevPageStatus) => {
             return {
               ...prevPageStatus,
               nowPage: postBody.page,
@@ -110,7 +111,7 @@ const ArticleList = (props) => {
     if (e.keyCode === 13) {
       const searchKey = e.target.value;
       setPageStatus((prevPageStatus) => {
-        console.log('')
+        console.log("");
         return {
           ...prevPageStatus,
           searchKey: searchKey,

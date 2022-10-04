@@ -1,9 +1,9 @@
 import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
 import BoardItem from "./BoardItem";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ActionToolbar from "../../components/ActionToolbar";
 import AdContent from "../shared/AdContent";
+import GlobalContext from "../../contexts/GlobalContext";
 
 const BoardListContainer = styled.div`
   position: relative;
@@ -17,12 +17,11 @@ const BoardListContainer = styled.div`
   }
 `;
 
-const API_ENDPOINT = "http://103.251.113.51:5000/api/hotBoard";
-// const API_ENDPOINT = "http://localhost:5000/api/hotBoard";
-
 const BoardList = () => {
   const [boardData, setboardData] = useState([]);
+  const { API_BASEURL } = useContext(GlobalContext) || {};
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
+  const API_ENDPOINT = `${API_BASEURL}/hotBoard`;
 
   useEffect(() => {
     fetch(API_ENDPOINT, { method: "GET" })

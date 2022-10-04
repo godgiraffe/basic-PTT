@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components/macro";
 import AdContent from "../shared/AdContent";
+import GlobalContext from "../../contexts/GlobalContext";
 
 const ArticleContentContainer = styled.div`
   width: 100vw;
@@ -57,6 +58,7 @@ const ArticleContentContainer = styled.div`
 `;
 
 const ArticleContent = () => {
+  const { API_BASEURL } = useContext(GlobalContext) || {};
   const [article, setArticle] = useState({
     author: "",
     title: "",
@@ -65,8 +67,8 @@ const ArticleContent = () => {
     release_time: "",
   });
   const { boardId, ArticleId } = useParams();
-
-  const API_ENDPOINT = `http://103.251.113.51:5000/api/getArticle/${boardId}/${ArticleId}`;
+  const API_ENDPOINT = `${API_BASEURL}/getArticle/${boardId}/${ArticleId}`;
+  // const API_ENDPOINT = `http://103.251.113.51:5000/api/getArticle/${boardId}/${ArticleId}`;
 
   useEffect(() => {
     fetch(API_ENDPOINT, { method: "GET" })

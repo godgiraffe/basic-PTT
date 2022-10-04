@@ -94,14 +94,15 @@ const Layout = () => {
 
   const GlobalContextValue = {
     setBoardInfo: setBoardInfo,
+    API_BASEURL: "http://103.251.113.51:5000/api",
   };
 
   useEffect(() => {
-    if (Object.keys(params).length === 0 ){
+    if (Object.keys(params).length === 0) {
       setBoardInfo({
         boardName: "",
         boardId: "",
-      })
+      });
     }
   }, [params]);
 
