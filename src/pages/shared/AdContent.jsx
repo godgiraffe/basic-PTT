@@ -42,7 +42,7 @@ const AdContent = () => {
     };
 
     const postBody = {
-      boardId: boardId ? boardId : 0,
+      boardId: boardId ? boardId : "A0",
     };
     fetch(API_ENDPOINT, {
       method: "POST",
@@ -64,9 +64,13 @@ const AdContent = () => {
   };
   return (
     <StyledAdContent>
-      {isAdLoadingComplete ? (
+      {isAdLoadingComplete && adInfo.status === true ? (
         <a href={adInfo.redirectUrl} target="_blank" rel="noreferrer">
-          <img src={adInfo.imageUrl} alt="AdInfo" />
+          {boardId === undefined ? (
+            <img src={`/AdImages/A0.png`} alt="AdInfo" />
+          ) : (
+            <img src={`/AdImages/${boardId}.png`} alt="AdInfo" />
+          )}
         </a>
       ) : (
         ""
