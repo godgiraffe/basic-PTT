@@ -2,7 +2,7 @@ import styled from "styled-components/macro";
 import BoardItem from "./BoardItem";
 import { useState, useEffect, useContext } from "react";
 import ActionToolbar from "../../components/ActionToolbar";
-import AdContent from "../shared/AdContent";
+import AdContent from "../../components/AdContent";
 import GlobalContext from "../../contexts/GlobalContext";
 import { Helmet } from "react-helmet";
 

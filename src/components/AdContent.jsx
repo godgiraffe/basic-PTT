@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import GlobalContext from "../../contexts/GlobalContext";
+import GlobalContext from "../contexts/GlobalContext";
 
 const StyledAdContent = styled.div`
   position: sticky;
