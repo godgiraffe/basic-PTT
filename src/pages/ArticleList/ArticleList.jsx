@@ -6,6 +6,7 @@ import ActionToolbar from "../../components/ActionToolbar";
 import ArticleItem from "./ArticleItem";
 import AdContent from "../shared/AdContent";
 import GlobalContext from "../../contexts/GlobalContext";
+import { Helmet } from "react-helmet";
 
 const ArticleListContainer = styled.div`
   position: relative;
@@ -119,7 +120,13 @@ const ArticleList = (props) => {
   };
 
   return (
-    <>
+    <div className="application">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta name="title" content={`批踢踢-鄉民之力 ${boardName}`} />
+        <meta name="description" content={`批踢踢-鄉民之力 ${boardName}`} />
+        <title>批踢踢-鄉民之力</title>
+      </Helmet>
       <ActionToolbar boardId={boardId} pageStatus={pageStatus} />
       <ArticleListContainer>
         <div className="articleContent">
@@ -158,7 +165,7 @@ const ArticleList = (props) => {
           <AdContent />
         </div>
       </ArticleListContainer>
-    </>
+    </div>
   );
 };
 

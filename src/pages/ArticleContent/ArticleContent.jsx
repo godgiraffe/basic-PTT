@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components/macro";
 import AdContent from "../shared/AdContent";
 import GlobalContext from "../../contexts/GlobalContext";
+import { Helmet } from "react-helmet";
 
 const ArticleContentContainer = styled.div`
   width: 100vw;
@@ -81,29 +82,37 @@ const ArticleContent = () => {
   }, []);
 
   return (
-    <ArticleContentContainer>
-      <div className="leftContent">
-        <div className="articleDetail">
-          <div className="authorContainer">
-            <div className="field">作者</div>
-            <div className="author">{article.author}</div>
-            <div className="field">看板</div>
-            <div className="board">{article.kind}</div>
+    <div className="application">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta name="title" content={article.title} />
+        <meta name="description" content={`批踢踢-鄉民之力 (pttwebs.com)${article.content.substring(0, 150).replace(/(\r\n|\n|\r)/gm, "")}`} />
+        <title>批踢踢-鄉民之力</title>
+      </Helmet>
+      <ArticleContentContainer>
+        <div className="leftContent">
+          <div className="articleDetail">
+            <div className="authorContainer">
+              <div className="field">作者</div>
+              <div className="author">{article.author}</div>
+              <div className="field">看板</div>
+              <div className="board">{article.kind}</div>
+            </div>
+            <div className="titleContainer">
+              <div className="field">標題</div>
+              <div className="title">{article.title}</div>
+            </div>
+            <div className="createDateContainer">
+              <div className="field">時間</div>
+              <div className="createDate">{article.release_time}</div>
+            </div>
           </div>
-          <div className="titleContainer">
-            <div className="field">標題</div>
-            <div className="title">{article.title}</div>
-          </div>
-          <div className="createDateContainer">
-            <div className="field">時間</div>
-            <div className="createDate">{article.release_time}</div>
-          </div>
+          <div className="articleContent">{article.content}</div>
+          <div className="responseDisabledInfo">推文自動更新已關閉</div>
         </div>
-        <div className="articleContent">{article.content}</div>
-        <div className="responseDisabledInfo">推文自動更新已關閉</div>
-      </div>
-      <AdContent />
-    </ArticleContentContainer>
+        <AdContent />
+      </ArticleContentContainer>
+    </div>
   );
 };
 
