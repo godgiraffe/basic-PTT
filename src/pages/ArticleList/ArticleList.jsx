@@ -84,7 +84,10 @@ const ArticleList = (props) => {
       .then((res) => res.json())
       .then((res) => {
         if (res.status === true) {
-          setArticleListData(res.data);
+          const sortedData = res.data.sort((article1, article2) => {
+            return new Date(article1.CreateDate) - new Date(article2.CreateDate);
+          })
+          setArticleListData(sortedData);
           setPageStatus((prevPageStatus) => {
             return {
               ...prevPageStatus,

@@ -1,5 +1,6 @@
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 const StyledArticleItem = styled.div`
   display: flex;
@@ -40,7 +41,7 @@ const ArticleItem = (props) => {
       </div>
       <div className="articleDetailContent">
         <div className="author">{Author}</div>
-        <div className="createDate">{CreateDate}</div>
+        <div className="createDate">{moment().format('MM/DD', CreateDate)}</div>
       </div>
     </StyledArticleItem>
   );
