@@ -7,6 +7,7 @@ import ArticleItem from "./ArticleItem";
 import AdContent from "../../components/AdContent";
 import GlobalContext from "../../contexts/GlobalContext";
 import { Helmet } from "react-helmet";
+import LoadingPage from "../../components/LoadingPage";
 
 const ArticleListContainer = styled.div`
   position: relative;
@@ -52,6 +53,7 @@ const ArticleList = (props) => {
 
   const { boardId } = useParams();
   const [articleListData, setArticleListData] = useState([]);
+  const [isArticleListDataComplete, SetIsArticleListDataComplete] = useState(false);
   const [pageStatus, setPageStatus] = useState({
     nowPage: 0,
     totalPage: 0,
@@ -63,6 +65,7 @@ const ArticleList = (props) => {
   const API_ENDPOINT = `${API_BASEURL}/getArticleList`;
 
   useEffect(() => {
+    SetIsArticleListDataComplete(false);
     fetchArticleList();
   }, [gotoPage, pageStatus.searchKey]);
 
@@ -95,6 +98,7 @@ const ArticleList = (props) => {
               totalPage: res.totalPage,
             };
           });
+          SetIsArticleListDataComplete(true);
         } else {
           console.error("get error", res.msg);
         }
@@ -144,7 +148,7 @@ const ArticleList = (props) => {
                 onKeyUp={handleSearchKeyOnKeyUp}
               />
             </div>
-            {articleListData
+            {isArticleListDataComplete === true
               ? articleListData.map((article) => {
                   const {
                     ArticleId,
@@ -165,7 +169,7 @@ const ArticleList = (props) => {
                     />
                   );
                 })
-              : ""}
+              : <LoadingPage />}
           </div>
           <AdContent />
         </div>
