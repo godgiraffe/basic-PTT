@@ -57,8 +57,8 @@ const ArticleList = (props) => {
     totalPage: 0,
     searchKey: "",
   });
-  const { setBoardInfo, API_BASEURL } = useContext(GlobalContext) || {};
-  const gotoPage = pageFormState ? pageFormState : page ? page : 0;
+  const { boardInfo, setBoardInfo, API_BASEURL } =
+    useContext(GlobalContext) || {};
 
   const API_ENDPOINT = `${API_BASEURL}/getArticleList`;
 
@@ -102,10 +102,12 @@ const ArticleList = (props) => {
       .catch((error) => {
         console.error("get error", error);
       });
-    setBoardInfo({
-      boardId: boardId,
-      boardName: boardName,
-    });
+    if (boardId !== boardInfo.boardId) {
+      setBoardInfo({
+        boardId: boardId,
+        boardName: boardName,
+      });
+    }
   };
 
   const handleSearchKeyOnKeyUp = (e) => {

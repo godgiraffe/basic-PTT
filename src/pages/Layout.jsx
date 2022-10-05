@@ -93,6 +93,7 @@ const Layout = () => {
   const { boardId, boardName } = boardInfo;
 
   const GlobalContextValue = {
+    boardInfo: boardInfo,
     setBoardInfo: setBoardInfo,
     // API_BASEURL: "http://103.251.113.51:5000/api",
     API_BASEURL: "http://pttwebs.com/bcc/api",
