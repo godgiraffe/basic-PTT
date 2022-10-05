@@ -42,14 +42,9 @@ const ArticleListContainer = styled.div`
   }
 `;
 
-const ArticleList = (props) => {
-  const { page, searchKey } = props;
+const ArticleList = () => {
   const location = useLocation();
-  const {
-    boardName,
-    boardId: boardIdFromState,
-    page: pageFormState,
-  } = location.state || {};
+  const { boardName, page } = location.state || {};
 
   const { boardId } = useParams();
   const [articleListData, setArticleListData] = useState([]);
@@ -61,8 +56,9 @@ const ArticleList = (props) => {
   });
   const { boardInfo, setBoardInfo, API_BASEURL } =
     useContext(GlobalContext) || {};
+  const gotoPage = page ? page : 0;
 
-  const API_ENDPOINT = `${API_BASEURL}/getArticleList`;
+  const API_ENDPOINT = `${API_BASEURL}/searchArticle`;
 
   useEffect(() => {
     SetIsArticleListDataComplete(false);
@@ -75,7 +71,7 @@ const ArticleList = (props) => {
     };
 
     const postBody = {
-      boardId: boardIdFromState ? boardIdFromState : boardId,
+      boardId: boardId,
       page: gotoPage,
       searchKey: pageStatus.searchKey ? pageStatus.searchKey : "",
     };
@@ -88,8 +84,10 @@ const ArticleList = (props) => {
       .then((res) => {
         if (res.status === true) {
           const sortedData = res.data.sort((article1, article2) => {
-            return new Date(article1.CreateDate) - new Date(article2.CreateDate);
-          })
+            return (
+              new Date(article1.CreateDate) - new Date(article2.CreateDate)
+            );
+          });
           setArticleListData(sortedData);
           setPageStatus((prevPageStatus) => {
             return {
