@@ -41,7 +41,7 @@ const ArticleItem = (props) => {
       </div>
       <div className="articleDetailContent">
         <div className="author">{Author}</div>
-        <div className="createDate">{moment().format('MM/DD', CreateDate)}</div>
+        <div className="createDate">{moment(CreateDate).format('MM/DD')}</div>
       </div>
     </StyledArticleItem>
   );
