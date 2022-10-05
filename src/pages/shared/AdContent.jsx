@@ -14,7 +14,7 @@ const StyledAdContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  img{
+  img {
     max-width: 100%;
     height: auto;
   }
@@ -24,6 +24,7 @@ const AdContent = () => {
   const { API_BASEURL } = useContext(GlobalContext) || {};
   const API_ENDPOINT = `${API_BASEURL}/adInfo`;
   const { boardId } = useParams();
+  const [isAdLoadingComplete, setisAdLoadingComplete] = useState(false);
   const [adInfo, setAdInfo] = useState({
     imageUrl: "",
     msg: "",
@@ -50,9 +51,10 @@ const AdContent = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if(res.status === true){
+        if (res.status === true) {
           setAdInfo(res);
-        }else{
+          setisAdLoadingComplete(true);
+        } else {
           console.error("get AdInfo error", res.msg);
         }
       })
@@ -62,9 +64,13 @@ const AdContent = () => {
   };
   return (
     <StyledAdContent>
-      <a href={adInfo.redirectUrl} target="_blank" rel="noreferrer">
-        <img src={adInfo.imageUrl} alt="AdInfo" />
-      </a>
+      {isAdLoadingComplete ? (
+        <a href={adInfo.redirectUrl} target="_blank" rel="noreferrer">
+          <img src={adInfo.imageUrl} alt="AdInfo" />
+        </a>
+      ) : (
+        ""
+      )}
     </StyledAdContent>
   );
 };
