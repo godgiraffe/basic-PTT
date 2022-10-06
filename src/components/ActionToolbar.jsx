@@ -27,11 +27,12 @@ const StyledActionToolbar = styled.div`
         background-color: #bbb;
         color: #000;
       }
-      &.disabled{
+      &.disabled {
         border-color: #111;
         background-color: #222;
         color: #666;
-        cursor: default;
+        cursor: not-allowed;
+        pointer-events: none;
       }
     }
   }
@@ -40,8 +41,8 @@ const StyledActionToolbar = styled.div`
 const ActionToolbar = (props) => {
   const { boardId, pageStatus } = props;
   const { nowPage, totalPage } = pageStatus || {};
-  const prevPage = !nowPage  && nowPage===0 ? totalPage-1 : nowPage-1;
-  const nextPage = !nowPage  && nowPage===0 ? -1 : nowPage+1;
+  const prevPage = !nowPage && nowPage === 0 ? totalPage - 1 : nowPage - 1;
+  const nextPage = !nowPage && nowPage === 0 ? -1 : nowPage + 1;
   return (
     <StyledActionToolbar>
       <div className="btn-group">
@@ -54,28 +55,32 @@ const ActionToolbar = (props) => {
           <Link
             to={`/ArticleList/${boardId}`}
             state={{ boardId: boardId, page: 1 }}
-            className={ nowPage === 1 ? "disabled btn" : "btn"}
+            className={nowPage === 1 ? "disabled btn" : "btn"}
           >
             最舊
           </Link>
           <Link
             to={`/ArticleList/${boardId}`}
-            state={{ boardId: boardId, page:  prevPage}}
-            className={ nowPage === 1 ? "disabled btn" : "btn"}
+            state={{ boardId: boardId, page: prevPage }}
+            className={nowPage === 1 ? "disabled btn" : "btn"}
           >
             ‹ 上頁
           </Link>
           <Link
             to={`/ArticleList/${boardId}`}
-            state={{ boardId: boardId, page:  nextPage}}
-            className={ nowPage === 0  || nowPage === totalPage ? "disabled btn" : "btn"}
+            state={{ boardId: boardId, page: nextPage }}
+            className={
+              nowPage === 0 || nowPage === totalPage ? "disabled btn" : "btn"
+            }
           >
             下頁 ›
           </Link>
           <Link
             to={`/ArticleList/${boardId}`}
             state={{ boardId: boardId, page: 0 }}
-            className={ nowPage === 0  || nowPage === totalPage ? "disabled btn" : "btn"}
+            className={
+              nowPage === 0 || nowPage === totalPage ? "disabled btn" : "btn"
+            }
           >
             最新
           </Link>

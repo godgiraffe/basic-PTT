@@ -41,6 +41,14 @@ const ArticleListContainer = styled.div`
       max-width: 800px;
       width: 800px;
     }
+    .emptyContent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  font-size: 6em;
+  color: #FFF;
+    }
   }
 `;
 
@@ -92,7 +100,9 @@ const ArticleList = () => {
       .then((res) => {
         if (res.status === true) {
           const sortedData = res.data.sort((article1, article2) => {
-            return  new Date(article1.CreateDate) - new Date(article2.CreateDate);
+            return (
+              new Date(article1.CreateDate) - new Date(article2.CreateDate)
+            );
           });
           setArticleListData(sortedData);
           setPageStatus((prevPageStatus) => {
@@ -130,13 +140,43 @@ const ArticleList = () => {
     if (e.keyCode === 13) {
       const searchKey = e.target.value;
       setPageStatus((prevPageStatus) => {
-        console.log("");
         return {
           ...prevPageStatus,
           searchKey: searchKey,
         };
       });
     }
+  };
+
+  const renderArticleList = () => {
+    if (fetchDataStatus.loadComplete === true) {
+      return (
+        <>
+          {articleListData.length !== 0 ? articleListData.map((article) => {
+            const { ArticleId, ArticleTitle, Author, CreateDate } = article;
+            return (
+              <ArticleItem
+                key={ArticleId}
+                BoardId={boardId}
+                ArticleId={ArticleId}
+                ArticleTitle={ArticleTitle}
+                Author={Author}
+                CreateDate={CreateDate}
+              />
+            );
+          }) : <div className="emptyContent">查無資料</div>}
+          {pageStatus.nowPage === 0 ? <FixedContent /> : ""}
+        </>
+      );
+    }
+
+    if (fetchDataStatus.gotError === true) return <ErrorPage />;
+
+    if (
+      fetchDataStatus.gotError === false &&
+      fetchDataStatus.loadComplete === false
+    )
+      return <LoadingPage />;
   };
 
   return (
@@ -159,26 +199,7 @@ const ArticleList = () => {
                 onKeyUp={handleSearchKeyOnKeyUp}
               />
             </div>
-            {fetchDataStatus.loadComplete === true
-              ? articleListData.map((article) => {
-                  const { ArticleId, ArticleTitle, Author, CreateDate} = article;
-                  return (
-                    <ArticleItem
-                      key={ArticleId}
-                      BoardId={boardId}
-                      ArticleId={ArticleId}
-                      ArticleTitle={ArticleTitle}
-                      Author={Author}
-                      CreateDate={CreateDate}
-                    />
-                  );
-                })
-              : fetchDataStatus.gotError === false ? <LoadingPage /> : <ErrorPage />
-            }
-
-            {
-              pageStatus.nowPage === 0 ? <FixedContent /> : ""
-            }
+            {renderArticleList()}
           </div>
           <AdContent />
         </div>

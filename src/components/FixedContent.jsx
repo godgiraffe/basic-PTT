@@ -1,4 +1,3 @@
-import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import GlobalContext from "../contexts/GlobalContext";
