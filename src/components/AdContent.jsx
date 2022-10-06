@@ -24,11 +24,12 @@ const AdContent = () => {
   const { API_BASEURL } = useContext(GlobalContext) || {};
   const API_ENDPOINT = `${API_BASEURL}/adInfo`;
   const { boardId } = useParams();
-  const [isAdLoadingComplete, setisAdLoadingComplete] = useState(false);
+  const [isAdLoadingComplete, setIsAdLoadingComplete] = useState(false);
   const [adInfo, setAdInfo] = useState({
-    imageUrl: "",
+    imgSrc: "",
     msg: "",
     redirectUrl: "",
+    alt: "AdInfo",
     status: false,
   });
 
@@ -52,8 +53,16 @@ const AdContent = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.status === true) {
-          setAdInfo(res);
-          setisAdLoadingComplete(true);
+          try {
+            const adImageFileName = boardId === undefined ? 'A0.png' : `${boardId}.png`;
+            const imgSrc = require(`../assetes/adImages/${adImageFileName}`);
+            res['imgSrc'] = imgSrc;
+            res['alt'] = "AdInfo";
+            setAdInfo(res);
+            setIsAdLoadingComplete(true);
+          } catch (error) {
+            console.log('get Image error', error);
+          }
         } else {
           console.error("get AdInfo error", res.msg);
         }
@@ -66,14 +75,10 @@ const AdContent = () => {
     <StyledAdContent>
       {isAdLoadingComplete && adInfo.status === true ? (
         <a href={adInfo.redirectUrl} target="_blank" rel="noreferrer">
-          {boardId === undefined ? (
-            <img src={`/AdImages/A0.png`} alt="AdInfo" />
-          ) : (
-            <img src={`/AdImages/${boardId}.png`} alt="AdInfo" />
-          )}
+          <img src={adInfo.imgSrc} alt={adInfo.alt} />
         </a>
       ) : (
-        ""
+        <span style={{color:'white'}}>廣告招募中</span>
       )}
     </StyledAdContent>
   );

@@ -5,6 +5,8 @@ const ErrorPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 80vh;
+  font-size: 6em;
+  color: #FFF;
 `;
 
 const ErrorPage = () => {
