@@ -7,6 +7,7 @@ import ArticleItem from "./ArticleItem";
 import AdContent from "../../components/AdContent";
 import GlobalContext from "../../contexts/GlobalContext";
 import { Helmet } from "react-helmet";
+import FixedContent from "../../components/FixedContent";
 import LoadingPage from "../../components/LoadingPage";
 import ErrorPage from "../../components/ErrorPage";
 
@@ -160,13 +161,7 @@ const ArticleList = () => {
             </div>
             {fetchDataStatus.loadComplete === true
               ? articleListData.map((article) => {
-                  const {
-                    ArticleId,
-                    ArticleTitle,
-                    Author,
-                    CreateDate,
-                    IsFixed,
-                  } = article;
+                  const { ArticleId, ArticleTitle, Author, CreateDate} = article;
                   return (
                     <ArticleItem
                       key={ArticleId}
@@ -175,11 +170,14 @@ const ArticleList = () => {
                       ArticleTitle={ArticleTitle}
                       Author={Author}
                       CreateDate={CreateDate}
-                      IsFixed={IsFixed}
                     />
                   );
                 })
               : fetchDataStatus.gotError === false ? <LoadingPage /> : <ErrorPage />
+            }
+
+            {
+              pageStatus.nowPage === 0 ? <FixedContent /> : ""
             }
           </div>
           <AdContent />
