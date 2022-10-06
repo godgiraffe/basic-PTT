@@ -8,6 +8,7 @@ import AdContent from "../../components/AdContent";
 import GlobalContext from "../../contexts/GlobalContext";
 import { Helmet } from "react-helmet";
 import LoadingPage from "../../components/LoadingPage";
+import ErrorPage from "../../components/ErrorPage";
 
 const ArticleListContainer = styled.div`
   position: relative;
@@ -48,7 +49,10 @@ const ArticleList = () => {
 
   const { boardId } = useParams();
   const [articleListData, setArticleListData] = useState([]);
-  const [isArticleListDataComplete, SetIsArticleListDataComplete] = useState(false);
+  const [fetchDataStatus, setFetchDataStatus] = useState({
+    loadComplete: false,
+    gotError: false,
+  });
   const [pageStatus, setPageStatus] = useState({
     nowPage: 0,
     totalPage: 0,
@@ -61,7 +65,10 @@ const ArticleList = () => {
   const API_ENDPOINT = `${API_BASEURL}/searchArticle`;
 
   useEffect(() => {
-    SetIsArticleListDataComplete(false);
+    setFetchDataStatus({
+      loadComplete: false,
+      gotError: false,
+    });
     fetchArticleList();
   }, [gotoPage, pageStatus.searchKey]);
 
@@ -84,9 +91,7 @@ const ArticleList = () => {
       .then((res) => {
         if (res.status === true) {
           const sortedData = res.data.sort((article1, article2) => {
-            return (
-              new Date(article1.CreateDate) - new Date(article2.CreateDate)
-            );
+            return  new Date(article1.CreateDate) - new Date(article2.CreateDate);
           });
           setArticleListData(sortedData);
           setPageStatus((prevPageStatus) => {
@@ -96,9 +101,16 @@ const ArticleList = () => {
               totalPage: res.totalPage,
             };
           });
-          SetIsArticleListDataComplete(true);
+          setFetchDataStatus({
+            loadComplete: true,
+            gotError: false,
+          });
         } else {
-          console.error("get error", res.msg);
+          console.error("get error", res.result);
+          setFetchDataStatus({
+            loadComplete: false,
+            gotError: true,
+          });
         }
       })
       .catch((error) => {
@@ -146,7 +158,7 @@ const ArticleList = () => {
                 onKeyUp={handleSearchKeyOnKeyUp}
               />
             </div>
-            {isArticleListDataComplete === true
+            {fetchDataStatus.loadComplete === true
               ? articleListData.map((article) => {
                   const {
                     ArticleId,
@@ -167,7 +179,8 @@ const ArticleList = () => {
                     />
                   );
                 })
-              : <LoadingPage />}
+              : fetchDataStatus.gotError === false ? <LoadingPage /> : <ErrorPage />
+            }
           </div>
           <AdContent />
         </div>
