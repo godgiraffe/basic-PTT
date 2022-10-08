@@ -6,15 +6,12 @@ const ErrorPageContainer = styled.div`
   align-items: center;
   height: 80vh;
   font-size: 6em;
-  color: #FFF;
+  color: #fff;
 `;
 
-const ErrorPage = () => {
-  return (
-    <ErrorPageContainer>
-        發生錯誤
-    </ErrorPageContainer>
-  );
+const ErrorPage = (props) => {
+  const { msg } = props;
+  return <ErrorPageContainer>發生錯誤 { msg ? ` - ${msg}` : ""}</ErrorPageContainer>;
 };
 
 export default ErrorPage;
