@@ -38,7 +38,7 @@ const BoardList = () => {
         setboardData(baordData);
       })
       .catch((error) => {
-        console.error("get error", error);
+        console.error("BoardList - get error", error);
       });
   }, []);
 

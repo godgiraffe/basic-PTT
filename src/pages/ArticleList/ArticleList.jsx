@@ -117,7 +117,7 @@ const ArticleList = () => {
             gotError: false,
           });
         } else {
-          console.error("get error", res.result);
+          console.error("ArticleList - get error", res.result);
           setFetchDataStatus({
             loadComplete: false,
             gotError: true,
@@ -125,7 +125,7 @@ const ArticleList = () => {
         }
       })
       .catch((error) => {
-        console.error("get error", error);
+        console.error("ArticleList - get error", error);
       });
     if (boardId !== boardInfo.boardId) {
       setBoardInfo({

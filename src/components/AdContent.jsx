@@ -68,7 +68,7 @@ const AdContent = () => {
         }
       })
       .catch((error) => {
-        console.error("get error", error);
+        console.error("AdComtent - get error", error);
       });
   };
   return (

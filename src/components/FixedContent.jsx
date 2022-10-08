@@ -24,7 +24,6 @@ const FixedContent = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log("fixed article", res);
         if (res.status === true) {
           const sortedData = res.data.sort((article1, article2) => {
             return (
@@ -35,7 +34,7 @@ const FixedContent = () => {
         }
       })
       .catch((error) => {
-        console.error("get error", error);
+        console.error("FixedContent - get error", error);
       });
   }, []);
 

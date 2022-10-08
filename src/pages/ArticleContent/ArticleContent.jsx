@@ -74,10 +74,14 @@ const ArticleContent = () => {
     fetch(API_ENDPOINT, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
-        setArticle(res);
+        if (res.status === false ){
+          console.error("articleContent - get error", res);
+        }else{
+          setArticle(res);
+        }
       })
       .catch((error) => {
-        console.error("get error", error);
+        console.error("articleContent - get  error", error);
       });
   }, []);
 
