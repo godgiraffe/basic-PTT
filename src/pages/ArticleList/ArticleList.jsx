@@ -41,13 +41,13 @@ const ArticleListContainer = styled.div`
       max-width: 800px;
       width: 800px;
     }
-    .emptyContent{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-  font-size: 6em;
-  color: #FFF;
+    .emptyContent {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+      font-size: 6em;
+      color: #fff;
     }
   }
 `;
@@ -152,19 +152,23 @@ const ArticleList = () => {
     if (fetchDataStatus.loadComplete === true) {
       return (
         <>
-          {articleListData.length !== 0 ? articleListData.map((article) => {
-            const { ArticleId, ArticleTitle, Author, CreateDate } = article;
-            return (
-              <ArticleItem
-                key={ArticleId}
-                BoardId={boardId}
-                ArticleId={ArticleId}
-                ArticleTitle={ArticleTitle}
-                Author={Author}
-                CreateDate={CreateDate}
-              />
-            );
-          }) : <div className="emptyContent">查無資料</div>}
+          {articleListData.length !== 0 ? (
+            articleListData.map((article) => {
+              const { ArticleId, ArticleTitle, Author, CreateDate } = article;
+              return (
+                <ArticleItem
+                  key={ArticleId}
+                  BoardId={boardId}
+                  ArticleId={ArticleId}
+                  ArticleTitle={ArticleTitle}
+                  Author={Author}
+                  CreateDate={CreateDate}
+                />
+              );
+            })
+          ) : (
+            <div className="emptyContent">查無資料</div>
+          )}
           {pageStatus.nowPage === 0 ? <FixedContent /> : ""}
         </>
       );
