@@ -28,14 +28,18 @@ const BoardList = () => {
     fetch(API_ENDPOINT, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
-        const baordData = res.data.sort((prevItem, nextItem) => {
-          const prevItem_activeUser = parseInt(prevItem.activeUser);
-          const nextItem_activeUser = parseInt(nextItem.activeUser);
-          if (prevItem_activeUser > nextItem_activeUser) return -1;
-          if (prevItem_activeUser < nextItem_activeUser) return 1;
-          return 0;
-        });
-        setboardData(baordData);
+        if (res.status === true){
+          const baordData = res.data.sort((prevItem, nextItem) => {
+            const prevItem_activeUser = parseInt(prevItem.activeUser);
+            const nextItem_activeUser = parseInt(nextItem.activeUser);
+            if (prevItem_activeUser > nextItem_activeUser) return -1;
+            if (prevItem_activeUser < nextItem_activeUser) return 1;
+            return 0;
+          });
+          setboardData(baordData);
+        }else{
+          console.error("BoardList - get error", `status: ${res.status}, msg: ${res.msg}`);
+        }
       })
       .catch((error) => {
         console.error("BoardList - get error", error);
