@@ -56,13 +56,12 @@ const AdContent = () => {
           try {
             const adImageFileName = boardName === undefined ? 'Gossiping.png' : `${boardName}.png`;
             const imgSrc = require(`../assetes/adImages/${adImageFileName}`);
-            console.log('imgSrc', imgSrc)
             res['imgSrc'] = imgSrc;
             res['alt'] = "AdInfo";
             setAdInfo(res);
             setIsAdLoadingComplete(true);
           } catch (error) {
-            console.log('get Image error', error);
+            console.error('get Image error', error);
           }
         } else {
           console.error("get AdInfo error", res.msg);

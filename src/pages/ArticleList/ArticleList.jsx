@@ -91,9 +91,9 @@ const ArticleList = () => {
       .concat(gotoPage ? `page=${gotoPage}` : "")
       .concat(gotoPage && pageStatus.searchKey ? "&" : "")
       .concat(pageStatus.searchKey ? `q=${pageStatus.searchKey}` : "");
-    console.log('queryUrl', queryUrl)
 
-    fetch(queryUrl, { method: "GET" })
+
+    fetch(queryUrl, { method: "GET" ,mode: 'no-cors'})
       .then((res) => res.json())
       .then((res) => {
         if (res.status === true) {
