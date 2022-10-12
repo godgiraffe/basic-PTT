@@ -11,9 +11,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<BoardList />}></Route>
-          <Route path="/ArticleList/:boardId" element={<ArticleList />}></Route>
+          <Route path="/ArticleList/:boardName" element={<ArticleList />}></Route>
           <Route
-            path="/ArticleContent/:boardId/:ArticleId"
+            path="/ArticleContent/:boardName/:ArticleId"
             element={<ArticleContent />}
           ></Route>
         </Route>

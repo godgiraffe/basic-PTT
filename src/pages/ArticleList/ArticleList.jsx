@@ -54,9 +54,9 @@ const ArticleListContainer = styled.div`
 
 const ArticleList = () => {
   const location = useLocation();
-  const { boardName, page } = location.state || {};
+  const { page } = location.state || {};
 
-  const { boardId } = useParams();
+  const { boardName } = useParams();
   const [articleListData, setArticleListData] = useState([]);
   const [fetchDataStatus, setFetchDataStatus] = useState({
     loadComplete: false,
@@ -71,8 +71,6 @@ const ArticleList = () => {
     useContext(GlobalContext) || {};
   const gotoPage = page ? page : 0;
 
-  const API_ENDPOINT = `${API_BASEURL}/searchArticle`;
-
   useEffect(() => {
     setFetchDataStatus({
       loadComplete: false,
@@ -81,21 +79,21 @@ const ArticleList = () => {
     fetchArticleList();
   }, [gotoPage, pageStatus.searchKey]);
 
+  const API_ENDPOINT = `${API_BASEURL}/searchArticle/${boardName}`;
   const fetchArticleList = () => {
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
     const postBody = {
-      boardId: boardId,
+      boardName: boardName,
       page: gotoPage,
       searchKey: pageStatus.searchKey ? pageStatus.searchKey : "",
     };
-    fetch(API_ENDPOINT, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(postBody),
-    })
+
+    const queryUrl = `${API_ENDPOINT}?`
+      .concat(gotoPage ? `page=${gotoPage}` : "")
+      .concat(gotoPage && pageStatus.searchKey ? "&" : "")
+      .concat(pageStatus.searchKey ? `q=${pageStatus.searchKey}` : "");
+    console.log('queryUrl', queryUrl)
+
+    fetch(queryUrl, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
         if (res.status === true) {
@@ -127,9 +125,8 @@ const ArticleList = () => {
       .catch((error) => {
         console.error("ArticleList - get error", error);
       });
-    if (boardId !== boardInfo.boardId) {
+    if (boardName !== boardInfo.boardName) {
       setBoardInfo({
-        boardId: boardId,
         boardName: boardName,
       });
     }
@@ -158,7 +155,7 @@ const ArticleList = () => {
               return (
                 <ArticleItem
                   key={ArticleId}
-                  BoardId={boardId}
+                  boardName={boardName}
                   ArticleId={ArticleId}
                   ArticleTitle={ArticleTitle}
                   Author={Author}
@@ -191,7 +188,7 @@ const ArticleList = () => {
         <meta name="description" content={`批踢踢-鄉民之力 ${boardName}`} />
         <title>批踢踢-鄉民之力</title>
       </Helmet>
-      <ActionToolbar boardId={boardId} pageStatus={pageStatus} />
+      <ActionToolbar boardName={boardName} pageStatus={pageStatus} />
       <ArticleListContainer>
         <div className="articleContent">
           <div className="articleList">

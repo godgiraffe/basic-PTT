@@ -39,7 +39,7 @@ const StyledActionToolbar = styled.div`
 `;
 
 const ActionToolbar = (props) => {
-  const { boardId, pageStatus } = props;
+  const { boardName, pageStatus } = props;
   const { nowPage, totalPage } = pageStatus || {};
   const prevPage = !nowPage && nowPage === 0 ? totalPage - 1 : nowPage - 1;
   const nextPage = !nowPage && nowPage === 0 ? -1 : nowPage + 1;
@@ -53,22 +53,22 @@ const ActionToolbar = (props) => {
       {pageStatus ? (
         <div className="btn-group" style={{ marginLeft: "auto" }}>
           <Link
-            to={`/ArticleList/${boardId}`}
-            state={{ boardId: boardId, page: 1 }}
+            to={`/ArticleList/${boardName}`}
+            state={{ boardName: boardName, page: 1 }}
             className={nowPage === 1 ? "disabled btn" : "btn"}
           >
             最舊
           </Link>
           <Link
-            to={`/ArticleList/${boardId}`}
-            state={{ boardId: boardId, page: prevPage }}
+            to={`/ArticleList/${boardName}`}
+            state={{ boardName: boardName, page: prevPage }}
             className={nowPage === 1 ? "disabled btn" : "btn"}
           >
             ‹ 上頁
           </Link>
           <Link
-            to={`/ArticleList/${boardId}`}
-            state={{ boardId: boardId, page: nextPage }}
+            to={`/ArticleList/${boardName}`}
+            state={{ boardName: boardName, page: nextPage }}
             className={
               nowPage === 0 || nowPage === totalPage ? "disabled btn" : "btn"
             }
@@ -76,8 +76,8 @@ const ActionToolbar = (props) => {
             下頁 ›
           </Link>
           <Link
-            to={`/ArticleList/${boardId}`}
-            state={{ boardId: boardId, page: 0 }}
+            to={`/ArticleList/${boardName}`}
+            state={{ boardName: boardName, page: 0 }}
             className={
               nowPage === 0 || nowPage === totalPage ? "disabled btn" : "btn"
             }

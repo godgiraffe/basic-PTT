@@ -33,11 +33,11 @@ const StyledArticleItem = styled.div`
 `;
 
 const ArticleItem = (props) => {
-  const { BoardId, ArticleId, ArticleTitle, Author, CreateDate, IsFixed } = props;
+  const { boardName, ArticleId, ArticleTitle, Author, CreateDate } = props;
   return (
     <StyledArticleItem>
       <div className="titleContent">
-        <Link className="articleTitle" to={`/ArticleContent/${BoardId}/${ArticleId}`}>{ArticleTitle}</Link>
+        <Link className="articleTitle" to={`/ArticleContent/${boardName}/${ArticleId}`}>{ArticleTitle}</Link>
       </div>
       <div className="articleDetailContent">
         <div className="author">{Author}</div>

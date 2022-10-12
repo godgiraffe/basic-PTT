@@ -62,12 +62,11 @@ const BoardList = () => {
             {boardData
               ? boardData.map((board) => {
                   <BoardItem />;
-                  const { boardId, name, activeUser, category, title } = board;
+                  const { name: boardName, activeUser, category, title } = board;
                   return (
                     <BoardItem
-                      key={boardId}
-                      boardId={boardId}
-                      name={name}
+                      key={boardName}
+                      boardName={boardName}
                       activeUser={activeUser}
                       category={category}
                       title={title}

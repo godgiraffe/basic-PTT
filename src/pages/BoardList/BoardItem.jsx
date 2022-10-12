@@ -23,12 +23,12 @@ const BoardItemLink = styled(Link)`
 `
 
 const BoardItem = (props) => {
-  const { boardId, name, activeUser, category, title } = props;
+  const { boardName, activeUser, category, title } = props;
   const userColor = getUserColor(activeUser);
 
   return (
-    <BoardItemLink to={`ArticleList/${boardId}`} state={{boardName: name}}>
-      <div className="board-name">{name}</div>
+    <BoardItemLink to={`ArticleList/${boardName}`} state={{boardName: boardName}}>
+      <div className="board-name">{boardName}</div>
       <div className="board-activeUser" style={{color:userColor}}>{activeUser}</div>
       <div className="board-category">{category}</div>
       <div className="board-title">{title}</div>

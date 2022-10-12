@@ -75,8 +75,8 @@ const ArticleContent = () => {
     gotError: false,
     errorMsg: "",
   });
-  const { boardId, ArticleId } = useParams();
-  const API_ENDPOINT = `${API_BASEURL}/getArticle/${boardId}/${ArticleId}`;
+  const { boardName, ArticleId } = useParams();
+  const API_ENDPOINT = `${API_BASEURL}/getArticle/${boardName}/${ArticleId}`;
 
   useEffect(() => {
     fetch(API_ENDPOINT, { method: "GET" })

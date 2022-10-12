@@ -4,7 +4,7 @@ import GlobalContext from "../contexts/GlobalContext";
 import ArticleItem from "../pages/ArticleList/ArticleItem";
 
 const FixedContent = () => {
-  const { boardId } = useParams();
+  const { boardName } = useParams();
   const { API_BASEURL } = useContext(GlobalContext) || {};
   const [fixedArticleListData, setFixedArticleListData] = useState([]);
 
@@ -15,7 +15,7 @@ const FixedContent = () => {
     };
 
     const postBody = {
-      boardId: boardId,
+      boardName: boardName,
     };
     fetch(API_ENDPOINT, {
       method: "POST",
@@ -46,8 +46,8 @@ const FixedContent = () => {
             const { ArticleId, ArticleTitle, Author, CreateDate } = article;
             return (
               <ArticleItem
-                key={ArticleId}
-                BoardId={boardId}
+                key={boardName}
+                boardName={boardName}
                 ArticleId={ArticleId}
                 ArticleTitle={ArticleTitle}
                 Author={Author}

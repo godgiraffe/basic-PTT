@@ -23,7 +23,7 @@ const StyledAdContent = styled.div`
 const AdContent = () => {
   const { API_BASEURL } = useContext(GlobalContext) || {};
   const API_ENDPOINT = `${API_BASEURL}/adInfo`;
-  const { boardId } = useParams();
+  const { boardName } = useParams();
   const [isAdLoadingComplete, setIsAdLoadingComplete] = useState(false);
   const [adInfo, setAdInfo] = useState({
     imgSrc: "",
@@ -43,7 +43,7 @@ const AdContent = () => {
     };
 
     const postBody = {
-      boardId: boardId ? boardId : "A0",
+      boardName: boardName ? boardName : "Gossiping",
     };
     fetch(API_ENDPOINT, {
       method: "POST",
@@ -54,8 +54,9 @@ const AdContent = () => {
       .then((res) => {
         if (res.status === true) {
           try {
-            const adImageFileName = boardId === undefined ? 'A0.png' : `${boardId}.png`;
+            const adImageFileName = boardName === undefined ? 'Gossiping.png' : `${boardName}.png`;
             const imgSrc = require(`../assetes/adImages/${adImageFileName}`);
+            console.log('imgSrc', imgSrc)
             res['imgSrc'] = imgSrc;
             res['alt'] = "AdInfo";
             setAdInfo(res);
