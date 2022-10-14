@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
-import moment from "moment";
+import dayjs from "dayjs";
 
 const StyledArticleItem = styled.div`
   display: flex;
@@ -41,7 +41,7 @@ const ArticleItem = (props) => {
       </div>
       <div className="articleDetailContent">
         <div className="author">{Author}</div>
-        <div className="createDate">{moment(CreateDate).format('MM/DD')}</div>
+        <div className="createDate">{dayjs(CreateDate).format('MM/DD')}</div>
       </div>
     </StyledArticleItem>
   );
