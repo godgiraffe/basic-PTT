@@ -93,7 +93,7 @@ const ArticleList = () => {
       .concat(pageStatus.searchKey ? `q=${pageStatus.searchKey}` : "");
 
 
-    fetch(queryUrl, { method: "GET" ,mode: 'no-cors'})
+    fetch(queryUrl, { method: "GET"})
       .then((res) => res.json())
       .then((res) => {
         if (res.status === true) {
