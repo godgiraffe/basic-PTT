@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import GlobalContext from "../contexts/GlobalContext";
 
 const StyledAdContent = styled.div`
   position: sticky;
@@ -21,8 +20,7 @@ const StyledAdContent = styled.div`
 `;
 
 const AdContent = () => {
-  const { API_BASEURL } = useContext(GlobalContext) || {};
-  const API_ENDPOINT = `${API_BASEURL}/adInfo`;
+  const API_ENDPOINT = `${process.env.REACT_APP_API_BASEURL}/adInfo`;
   const { boardName } = useParams();
   const [isAdLoadingComplete, setIsAdLoadingComplete] = useState(false);
   const [adInfo, setAdInfo] = useState({

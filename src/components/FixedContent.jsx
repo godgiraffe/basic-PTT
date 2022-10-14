@@ -1,14 +1,12 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
-import GlobalContext from "../contexts/GlobalContext";
+import { useState, useEffect } from "react";
 import ArticleItem from "../pages/ArticleList/ArticleItem";
 
 const FixedContent = () => {
   const { boardName } = useParams();
-  const { API_BASEURL } = useContext(GlobalContext) || {};
   const [fixedArticleListData, setFixedArticleListData] = useState([]);
 
-  const API_ENDPOINT = `${API_BASEURL}/fixedArticle`;
+  const API_ENDPOINT = `${process.env.REACT_APP_API_BASEURL}/fixedArticle`;
   useEffect(() => {
     const headers = {
       "Content-Type": "application/json",

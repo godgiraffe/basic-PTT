@@ -67,7 +67,7 @@ const ArticleList = () => {
     totalPage: 0,
     searchKey: "",
   });
-  const { boardInfo, setBoardInfo, API_BASEURL } =
+  const { boardInfo, setBoardInfo } =
     useContext(GlobalContext) || {};
   const gotoPage = page ? page : 0;
 
@@ -79,7 +79,7 @@ const ArticleList = () => {
     fetchArticleList();
   }, [gotoPage, pageStatus.searchKey]);
 
-  const API_ENDPOINT = `${API_BASEURL}/searchArticle/${boardName}`;
+  const API_ENDPOINT = `${process.env.REACT_APP_API_BASEURL}/searchArticle/${boardName}`;
   const fetchArticleList = () => {
     const postBody = {
       boardName: boardName,

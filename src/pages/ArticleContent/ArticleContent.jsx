@@ -1,8 +1,7 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components/macro";
 import AdContent from "../../components/AdContent";
-import GlobalContext from "../../contexts/GlobalContext";
 import { Helmet } from "react-helmet";
 import LoadingPage from "../../components/LoadingPage";
 import ErrorPage from "../../components/ErrorPage";
@@ -62,7 +61,6 @@ const ArticleContentContainer = styled.div`
 
 
 const ArticleContent = () => {
-  const { API_BASEURL } = useContext(GlobalContext) || {};
   const [article, setArticle] = useState({
     author: "",
     title: "",
@@ -76,7 +74,7 @@ const ArticleContent = () => {
     errorMsg: "",
   });
   const { boardName, ArticleId } = useParams();
-  const API_ENDPOINT = `${API_BASEURL}/getArticle/${boardName}/${ArticleId}`;
+  const API_ENDPOINT = `${process.env.REACT_APP_API_BASEURL}/getArticle/${boardName}/${ArticleId}`;
 
   useEffect(() => {
     fetch(API_ENDPOINT, { method: "GET" })
