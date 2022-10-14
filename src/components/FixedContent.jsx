@@ -40,11 +40,11 @@ const FixedContent = () => {
     <>
       <div style={{ height: "0.5ex", backgroundColor: "#555" }}></div>
       {fixedArticleListData
-        ? fixedArticleListData.map((article) => {
+        ? fixedArticleListData.map((article, key) => {
             const { ArticleId, ArticleTitle, Author, CreateDate } = article;
             return (
               <ArticleItem
-                key={boardName}
+                key={key}
                 boardName={boardName}
                 ArticleId={ArticleId}
                 ArticleTitle={ArticleTitle}

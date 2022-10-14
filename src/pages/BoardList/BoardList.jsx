@@ -58,12 +58,12 @@ const BoardList = () => {
         <BoardListContainer>
           <div className="boardList">
             {boardData
-              ? boardData.map((board) => {
+              ? boardData.map((board, key) => {
                   <BoardItem />;
                   const { name: boardName, activeUser, category, title } = board;
                   return (
                     <BoardItem
-                      key={boardName}
+                      key={key}
                       boardName={boardName}
                       activeUser={activeUser}
                       category={category}
