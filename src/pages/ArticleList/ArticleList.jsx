@@ -184,9 +184,11 @@ const ArticleList = () => {
     <div className="application">
       <Helmet>
         <meta charSet="utf-8" />
+        <meta property="og:site_name" content="批踢踢-鄉民之力" />
+        <meta property="og:title" content={`看板 ${boardName} 文章列表 - 批踢踢-鄉民之力`} />
         <meta name="title" content={`批踢踢-鄉民之力 ${boardName}`} />
-        <meta name="description" content={`批踢踢-鄉民之力 ${boardName}`} />
-        <title>批踢踢-鄉民之力</title>
+        <meta name="description" content={`看板 ${boardName} 文章列表 - 批踢踢-鄉民之力 `} />
+        <title>看板 {boardName} 文章列表 - 批踢踢-鄉民之力</title>
       </Helmet>
       <ActionToolbar boardName={boardName} pageStatus={pageStatus} />
       <ArticleListContainer>

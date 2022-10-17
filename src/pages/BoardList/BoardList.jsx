@@ -48,9 +48,11 @@ const BoardList = () => {
     <div className="application">
       <Helmet>
         <meta charSet="utf-8" />
+        <meta property="og:site_name" content="批踢踢-鄉民之力 熱門看板"></meta>
+        <meta property="og:title" content="批踢踢-鄉民之力 熱門看板" />
         <meta name="title" content="批踢踢-鄉民之力 熱門看板"/>
         <meta name="description" content="批踢踢-鄉民之力 熱門看板" />
-        <title>批踢踢-鄉民之力</title>
+        <title>批踢踢-鄉民之力 熱門看板</title>
       </Helmet>
 
       <div style={{ position: "relative" }}>

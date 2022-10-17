@@ -108,6 +108,13 @@ const ArticleContent = () => {
       <div className="application">
         <Helmet>
           <meta charSet="utf-8" />
+          <meta property="og:site_name" content="批踢踢-鄉民之力"></meta>
+          <meta property="og:title" content={article.title} />
+          <meta property="og:description" content={`批踢踢-鄉民之力 (pttwebs.com)${article.content
+              .substring(0, 150)
+              .replace(/(\r\n|\n|\r)/gm, "")}`}
+          />
+          <meta name="keywords" content="Ptt BBS 批踢踢 鄉民之力" />
           <meta name="title" content={article.title} />
           <meta
             name="description"
@@ -115,7 +122,7 @@ const ArticleContent = () => {
               .substring(0, 150)
               .replace(/(\r\n|\n|\r)/gm, "")}`}
           />
-          <title>批踢踢-鄉民之力</title>
+          <title>{article.title} - 看板{article.kind} - 批踢踢-鄉民之力</title>
         </Helmet>
         <ArticleContentContainer>
           <div className="leftContent">
