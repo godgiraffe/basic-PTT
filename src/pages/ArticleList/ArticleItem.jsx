@@ -12,6 +12,11 @@ const StyledArticleItem = styled.div`
   padding: 4px 8px;
   .titleContent {
     width: 800px;
+    @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+      max-width: 960px;
+      width: 100vw;
+      word-break: break-all;
+    }
     @media ${(props) => props.theme.devices.mobile.mediaQuery} {
       max-width: 485px;
       width: 100vw;
@@ -19,12 +24,19 @@ const StyledArticleItem = styled.div`
     }
     .articleTitle {
       color: #aaa;
+      @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+        color: #fff;
+      }
       @media ${(props) => props.theme.devices.mobile.mediaQuery} {
         color: #fff;
       }
       &:hover {
         color: #333;
         background-color: #ccc;
+        @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+          color: #aaa;
+          background-color: #111;
+        }
         @media ${(props) => props.theme.devices.mobile.mediaQuery} {
           color: #aaa;
           background-color: #111;

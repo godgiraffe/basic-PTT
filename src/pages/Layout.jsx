@@ -30,6 +30,9 @@ const HeaderContainer = styled.div`
     }
     &:hover {
       background-color: #338;
+      @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+        background-color: #0c0a66;
+      }
       @media ${(props) => props.theme.devices.mobile.mediaQuery} {
         background-color: #0c0a66;
       }
@@ -66,6 +69,7 @@ const HeaderContainer = styled.div`
       font-size: 13px;
       color: #aaaaaa;
       margin-left: auto;
+      padding-right: 10px;
       &:hover {
         color: #fff;
       }

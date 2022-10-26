@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import styled, { useTheme } from "styled-components";
 import { useMedia } from "react-use";
@@ -15,10 +14,15 @@ const StyledAdContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+    max-width: 960px;
+    width: 100vw;
+    height: 64px;
+  }
   @media ${(props) => props.theme.devices.mobile.mediaQuery} {
-      max-width: 485px;
-      width: 100vw;
-      height: 64px;
+    max-width: 485px;
+    width: 100vw;
+    height: 64px;
   }
   img {
     max-width: 100%;
@@ -40,7 +44,7 @@ const AdContent = () => {
   const theme = useTheme();
   const isMobile = useMedia(`${theme.devices.mobile.hookMediaQuery}`);
   const isTablet = useMedia(`${theme.devices.tablet.hookMediaQuery}`);
-  const platform = isMobile ? "mobile" : isTablet ?  "tablet" : "desktop";
+  const platform = isMobile ? "mobile" : isTablet ? "tablet" : "desktop";
 
   useEffect(() => {
     fetchAdContentImage();
@@ -63,7 +67,8 @@ const AdContent = () => {
       .then((res) => {
         if (res.status === true) {
           try {
-            const adImageFileName = boardName === undefined ? "Gossiping.png" : `${boardName}.png`;
+            const adImageFileName =
+              boardName === undefined ? "Gossiping.png" : `${boardName}.png`;
             const imgSrc = getImgSrc(platform, adImageFileName);
             res["imgSrc"] = imgSrc;
             res["alt"] = "AdInfo";
@@ -94,9 +99,11 @@ const AdContent = () => {
 };
 
 const getImgSrc = (platform, adImageFileName) => {
-  if (platform === "mobile") return require(`../assetes/adImages/mobile/${adImageFileName}`);
-  if (platform === "tablet") return require(`../assetes/adImages/tablet/${adImageFileName}`);
+  if (platform === "mobile")
+    return require(`../assetes/adImages/mobile/${adImageFileName}`);
+  if (platform === "tablet")
+    return require(`../assetes/adImages/tablet/${adImageFileName}`);
   return require(`../assetes/adImages/desktop/${adImageFileName}`);
-}
+};
 
 export default AdContent;

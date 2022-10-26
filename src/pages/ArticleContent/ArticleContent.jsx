@@ -12,6 +12,10 @@ const ArticleContentContainer = styled.div`
   max-width: 1200px;
   display: flex;
   flex-direction: row;
+  @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+    flex-direction: column;
+    gap: 0px;
+  }
   @media ${(props) => props.theme.devices.mobile.mediaQuery} {
     flex-direction: column;
     gap: 0px;
@@ -71,6 +75,10 @@ const ArticleContentContainer = styled.div`
       background-color: #000;
       color: #999;
       white-space: pre-line;
+      @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+        padding: 1em;
+        word-break: break-all;
+      }
       @media ${(props) => props.theme.devices.mobile.mediaQuery} {
         padding: 1em;
         word-break: break-all;

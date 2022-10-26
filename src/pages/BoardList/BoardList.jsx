@@ -20,8 +20,8 @@ const BoardListContainer = styled.div`
     max-width: 800px;
     min-width: 485px;
     @media ${(props) => props.theme.devices.tablet.mediaQuery} {
-      max-width: 800px;
-      width: 800px;
+      width: 100vw;
+      max-width: 960px;
     }
   }
 `;

@@ -6,7 +6,15 @@ const BoardItemLink = styled(Link)`
   display: flex;
   width: 800px;
   @media ${(props) => props.theme.devices.tablet.mediaQuery} {
-    width: 800px;
+    flex-direction: column;
+    width: 100vw;
+    max-width: 960px;
+    margin: 8px 4px;
+    background-color: #111;
+    .boardInfoContainer {
+      display: flex;
+      flex-direction: row;
+    }
   }
   @media ${(props) => props.theme.devices.mobile.mediaQuery} {
     flex-direction: column;
@@ -14,7 +22,7 @@ const BoardItemLink = styled(Link)`
     max-width: 485px;
     margin: 8px 4px;
     background-color: #111;
-    .boardInfoContainer{
+    .boardInfoContainer {
       display: flex;
       flex-direction: row;
     }
@@ -25,6 +33,10 @@ const BoardItemLink = styled(Link)`
   &:hover {
     color: #888;
     background-color: #ccc;
+    @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+      color: #bbb;
+      background-color: #111;
+    }
     @media ${(props) => props.theme.devices.mobile.mediaQuery} {
       color: #bbb;
       background-color: #111;
@@ -33,6 +45,8 @@ const BoardItemLink = styled(Link)`
   .board-name {
     width: 8em;
     @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+      width: 70vw;
+      color: #fff;
     }
     @media ${(props) => props.theme.devices.mobile.mediaQuery} {
       width: 60vw;
@@ -42,6 +56,7 @@ const BoardItemLink = styled(Link)`
   .board-activeUser {
     width: 6em;
     @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+      width: 15vw;
     }
     @media ${(props) => props.theme.devices.mobile.mediaQuery} {
       width: 20vw;
@@ -50,6 +65,9 @@ const BoardItemLink = styled(Link)`
   .board-category {
     width: 3em;
     @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+      margin-left: auto;
+      padding-right: 4px;
+      width: fit-content;
     }
     @media ${(props) => props.theme.devices.mobile.mediaQuery} {
       margin-left: auto;
@@ -59,6 +77,7 @@ const BoardItemLink = styled(Link)`
   }
   .board-title {
     @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+      font-size: 16px;
     }
     @media ${(props) => props.theme.devices.mobile.mediaQuery} {
       font-size: 16px;
@@ -71,13 +90,14 @@ const BoardItem = (props) => {
   const userColor = getUserColor(activeUser);
   const theme = useTheme();
   const isMobile = useMedia(`${theme.devices.mobile.hookMediaQuery}`);
+  const isTablet = useMedia(`${theme.devices.tablet.hookMediaQuery}`);
 
   return (
     <BoardItemLink
       to={`ArticleList/${boardName}`}
       state={{ boardName: boardName }}
     >
-      {isMobile ? (
+      {isMobile || isTablet ? (
         <>
           <div className="boardInfoContainer">
             <div className="board-name">{boardName}</div>

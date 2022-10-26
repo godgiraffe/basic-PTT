@@ -19,6 +19,12 @@ const ArticleListContainer = styled.div`
   flex-direction: column;
   .searchbar {
     padding: 1ex 0;
+    @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+      padding: 1ex;
+      position: sticky;
+      top: 80px;
+      background: #000;
+    }
     @media ${(props) => props.theme.devices.mobile.mediaQuery} {
       width: 96vw;
       padding: 1ex;
@@ -41,6 +47,10 @@ const ArticleListContainer = styled.div`
     display: flex;
     flex-direction: row;
     gap: 100px;
+    @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+      flex-direction: column;
+      gap: 0px;
+    }
     @media ${(props) => props.theme.devices.mobile.mediaQuery} {
       flex-direction: column;
       gap: 0px;
@@ -51,6 +61,10 @@ const ArticleListContainer = styled.div`
       gap: 8px;
       max-width: 800px;
       width: 800px;
+      @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+        max-width: 960px;
+        width: 100vw;
+      }
       @media ${(props) => props.theme.devices.mobile.mediaQuery} {
         max-width: 485px;
         width: 100vw;

@@ -11,6 +11,10 @@ const StyledActionToolbar = styled.div`
   background: #000;
   max-width: 800px;
   width: 100vw;
+  @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+    max-width: 960px;
+    width: 100vw;
+  }
   @media ${(props) => props.theme.devices.mobile.mediaQuery} {
     max-width: 485px;
     width: 100vw;
