@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { useMedia } from "react-use";
 import { useParams } from "react-router-dom";
-import styled from "styled-components/macro";
+import styled, { useTheme } from "styled-components/macro";
 import AdContent from "../../components/AdContent";
 import { Helmet } from "react-helmet";
 import LoadingPage from "../../components/LoadingPage";
@@ -11,6 +12,10 @@ const ArticleContentContainer = styled.div`
   max-width: 1200px;
   display: flex;
   flex-direction: row;
+  @media ${(props) => props.theme.devices.mobile.mediaQuery} {
+    flex-direction: column;
+    gap: 0px;
+  }
   gap: 100px;
   font-size: 24px;
   .leftContent {
@@ -30,6 +35,7 @@ const ArticleContentContainer = styled.div`
         color: #999;
         background-color: #008;
         .field {
+          flex-shrink: 0;
           color: #008;
           background-color: #999;
         }
@@ -42,12 +48,33 @@ const ArticleContentContainer = styled.div`
           margin-left: auto;
         }
       }
+      .mobileAuthorContainer,
+      .mobileBoardContainer {
+        display: flex;
+        flex-direction: row;
+        color: #999;
+        background-color: #008;
+        .field {
+          padding: 0 12px;
+          color: #008;
+          background-color: #999;
+          flex-shrink: 0;
+        }
+        .author,
+        .board {
+          padding: 0 12px;
+        }
+      }
     }
     .articleContent {
       margin-top: 1em;
       background-color: #000;
       color: #999;
       white-space: pre-line;
+      @media ${(props) => props.theme.devices.mobile.mediaQuery} {
+        padding: 1em;
+        word-break: break-all;
+      }
     }
 
     .responseDisabledInfo {
@@ -58,7 +85,6 @@ const ArticleContentContainer = styled.div`
     }
   }
 `;
-
 
 const ArticleContent = () => {
   const [article, setArticle] = useState({
@@ -75,6 +101,8 @@ const ArticleContent = () => {
   });
   const { boardName, ArticleId } = useParams();
   const API_ENDPOINT = `${process.env.REACT_APP_API_BASEURL}/getArticle/${boardName}/${ArticleId}`;
+  const theme = useTheme();
+  const isMobile = useMedia(`${theme.devices.mobile.hookMediaQuery}`);
 
   useEffect(() => {
     fetch(API_ENDPOINT, { method: "GET" })
@@ -87,7 +115,7 @@ const ArticleContent = () => {
             errorMsg: res.result,
           });
           console.error("articleContent - get error", res);
-        }else{
+        } else {
           setFetchDataStatus({
             loadComplete: true,
             gotError: false,
@@ -101,7 +129,8 @@ const ArticleContent = () => {
   }, []);
 
   const renderArticleContent = () => {
-    if (fetchDataStatus.gotError === true) return <ErrorPage msg={fetchDataStatus.errorMsg}/>;
+    if (fetchDataStatus.gotError === true)
+      return <ErrorPage msg={fetchDataStatus.errorMsg} />;
     if (fetchDataStatus.loadComplete === false) return <LoadingPage />;
 
     return (
@@ -110,7 +139,9 @@ const ArticleContent = () => {
           <meta charSet="utf-8" />
           <meta property="og:site_name" content="批踢踢-鄉民之力"></meta>
           <meta property="og:title" content={article.title} />
-          <meta property="og:description" content={`批踢踢-鄉民之力 (pttwebs.com)${article.content
+          <meta
+            property="og:description"
+            content={`批踢踢-鄉民之力 (pttwebs.com)${article.content
               .substring(0, 150)
               .replace(/(\r\n|\n|\r)/gm, "")}`}
           />
@@ -122,17 +153,32 @@ const ArticleContent = () => {
               .substring(0, 150)
               .replace(/(\r\n|\n|\r)/gm, "")}`}
           />
-          <title>{article.title} - 看板{article.kind} - 批踢踢-鄉民之力</title>
+          <title>
+            {article.title} - 看板{article.kind} - 批踢踢-鄉民之力
+          </title>
         </Helmet>
         <ArticleContentContainer>
           <div className="leftContent">
             <div className="articleDetail">
-              <div className="authorContainer">
-                <div className="field">作者</div>
-                <div className="author">{article.author}</div>
-                <div className="field">看板</div>
-                <div className="board">{article.kind}</div>
-              </div>
+              {isMobile ? (
+                <>
+                  <div className="mobileAuthorContainer">
+                    <div className="field">作者</div>
+                    <div className="author">{article.author}</div>
+                  </div>
+                  <div className="mobileBoardContainer">
+                    <div className="field">看板</div>
+                    <div className="board">{article.kind}</div>
+                  </div>
+                </>
+              ) : (
+                <div className="authorContainer">
+                  <div className="field">作者</div>
+                  <div className="author">{article.author}</div>
+                  <div className="field">看板</div>
+                  <div className="board">{article.kind}</div>
+                </div>
+              )}
               <div className="titleContainer">
                 <div className="field">標題</div>
                 <div className="title">{article.title}</div>
@@ -148,16 +194,10 @@ const ArticleContent = () => {
           <AdContent />
         </ArticleContentContainer>
       </div>
-    )
+    );
+  };
 
-
-  }
-
-  return (
-    <>
-      {renderArticleContent()}
-    </>
-  );
+  return <>{renderArticleContent()}</>;
 };
 
 export default ArticleContent;

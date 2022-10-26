@@ -6,27 +6,38 @@ const StyledArticleItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  color:#aaa;
+  color: #aaa;
   background-color: #111;
   font-size: 20px;
   padding: 4px 8px;
-  .titleContent{
+  .titleContent {
     width: 800px;
-    .articleTitle{
+    @media ${(props) => props.theme.devices.mobile.mediaQuery} {
+      max-width: 485px;
+      width: 100vw;
+      word-break: break-all;
+    }
+    .articleTitle {
       color: #aaa;
-      &:hover{
+      @media ${(props) => props.theme.devices.mobile.mediaQuery} {
+        color: #fff;
+      }
+      &:hover {
         color: #333;
         background-color: #ccc;
+        @media ${(props) => props.theme.devices.mobile.mediaQuery} {
+          color: #aaa;
+          background-color: #111;
+        }
       }
     }
   }
-  .articleDetailContent{
+  .articleDetailContent {
     display: flex;
     flex-direction: row;
-    .author{
-
+    .author {
     }
-    .createDate{
+    .createDate {
       margin-left: auto;
     }
   }
@@ -37,11 +48,16 @@ const ArticleItem = (props) => {
   return (
     <StyledArticleItem>
       <div className="titleContent">
-        <Link className="articleTitle" to={`/ArticleContent/${boardName}/${ArticleId}`}>{ArticleTitle}</Link>
+        <Link
+          className="articleTitle"
+          to={`/ArticleContent/${boardName}/${ArticleId}`}
+        >
+          {ArticleTitle}
+        </Link>
       </div>
       <div className="articleDetailContent">
         <div className="author">{Author}</div>
-        <div className="createDate">{dayjs(CreateDate).format('MM/DD')}</div>
+        <div className="createDate">{dayjs(CreateDate).format("MM/DD")}</div>
       </div>
     </StyledArticleItem>
   );

@@ -12,9 +12,17 @@ const BoardListContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 100px;
+  @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+    flex-direction: column;
+    gap: 4px;
+  }
   .boardList {
     max-width: 800px;
-    width: 800px;
+    min-width: 485px;
+    @media ${(props) => props.theme.devices.tablet.mediaQuery} {
+      max-width: 800px;
+      width: 800px;
+    }
   }
 `;
 
@@ -26,7 +34,7 @@ const BoardList = () => {
     fetch(API_ENDPOINT, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
-        if (res.status === true){
+        if (res.status === true) {
           const baordData = res.data.sort((prevItem, nextItem) => {
             const prevItem_activeUser = parseInt(prevItem.activeUser);
             const nextItem_activeUser = parseInt(nextItem.activeUser);
@@ -35,8 +43,11 @@ const BoardList = () => {
             return 0;
           });
           setboardData(baordData);
-        }else{
-          console.error("BoardList - get error", `status: ${res.status}, msg: ${res.msg}`);
+        } else {
+          console.error(
+            "BoardList - get error",
+            `status: ${res.status}, msg: ${res.msg}`
+          );
         }
       })
       .catch((error) => {
@@ -50,7 +61,7 @@ const BoardList = () => {
         <meta charSet="utf-8" />
         <meta property="og:site_name" content="批踢踢-鄉民之力 熱門看板"></meta>
         <meta property="og:title" content="批踢踢-鄉民之力 熱門看板" />
-        <meta name="title" content="批踢踢-鄉民之力 熱門看板"/>
+        <meta name="title" content="批踢踢-鄉民之力 熱門看板" />
         <meta name="description" content="批踢踢-鄉民之力 熱門看板" />
         <title>批踢踢-鄉民之力 熱門看板</title>
       </Helmet>
@@ -62,7 +73,12 @@ const BoardList = () => {
             {boardData
               ? boardData.map((board, key) => {
                   <BoardItem />;
-                  const { name: boardName, activeUser, category, title } = board;
+                  const {
+                    name: boardName,
+                    activeUser,
+                    category,
+                    title,
+                  } = board;
                   return (
                     <BoardItem
                       key={key}

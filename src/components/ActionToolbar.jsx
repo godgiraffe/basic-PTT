@@ -4,12 +4,17 @@ import { Link } from "react-router-dom";
 const StyledActionToolbar = styled.div`
   position: sticky;
   top: 40px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
   width: 100vw;
   max-width: 1200px;
   z-index: 1;
   background: #000;
+  max-width: 800px;
+  width: 100vw;
+  @media ${(props) => props.theme.devices.mobile.mediaQuery} {
+    max-width: 485px;
+    width: 100vw;
+  }
   .btn-group {
     padding: 0;
     margin: 0;
@@ -36,6 +41,9 @@ const StyledActionToolbar = styled.div`
       }
     }
   }
+  .pageToolBar {
+    margin-left: auto;
+  }
 `;
 
 const ActionToolbar = (props) => {
@@ -51,7 +59,7 @@ const ActionToolbar = (props) => {
         </Link>
       </div>
       {pageStatus ? (
-        <div className="btn-group" style={{ marginLeft: "auto" }}>
+        <div className="btn-group pageToolBar">
           <Link
             to={`/ArticleList/${boardName}`}
             state={{ boardName: boardName, page: 1 }}

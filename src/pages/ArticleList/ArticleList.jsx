@@ -19,6 +19,13 @@ const ArticleListContainer = styled.div`
   flex-direction: column;
   .searchbar {
     padding: 1ex 0;
+    @media ${(props) => props.theme.devices.mobile.mediaQuery} {
+      width: 96vw;
+      padding: 1ex;
+      position: sticky;
+      top: 80px;
+      background: #000;
+    }
     #searchKey {
       background-color: #222;
       border: 1px solid #333;
@@ -34,12 +41,20 @@ const ArticleListContainer = styled.div`
     display: flex;
     flex-direction: row;
     gap: 100px;
+    @media ${(props) => props.theme.devices.mobile.mediaQuery} {
+      flex-direction: column;
+      gap: 0px;
+    }
     .articleList {
       display: flex;
       flex-direction: column;
       gap: 8px;
       max-width: 800px;
       width: 800px;
+      @media ${(props) => props.theme.devices.mobile.mediaQuery} {
+        max-width: 485px;
+        width: 100vw;
+      }
     }
     .emptyContent {
       display: flex;
@@ -67,8 +82,7 @@ const ArticleList = () => {
     totalPage: 0,
     searchKey: "",
   });
-  const { boardInfo, setBoardInfo } =
-    useContext(GlobalContext) || {};
+  const { boardInfo, setBoardInfo } = useContext(GlobalContext) || {};
   const gotoPage = page ? page : 0;
 
   useEffect(() => {
@@ -92,8 +106,7 @@ const ArticleList = () => {
       .concat(gotoPage && pageStatus.searchKey ? "&" : "")
       .concat(pageStatus.searchKey ? `q=${pageStatus.searchKey}` : "");
 
-
-    fetch(queryUrl, { method: "GET"})
+    fetch(queryUrl, { method: "GET" })
       .then((res) => res.json())
       .then((res) => {
         if (res.status === true) {
@@ -185,9 +198,15 @@ const ArticleList = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <meta property="og:site_name" content="批踢踢-鄉民之力" />
-        <meta property="og:title" content={`看板 ${boardName} 文章列表 - 批踢踢-鄉民之力`} />
+        <meta
+          property="og:title"
+          content={`看板 ${boardName} 文章列表 - 批踢踢-鄉民之力`}
+        />
         <meta name="title" content={`批踢踢-鄉民之力 ${boardName}`} />
-        <meta name="description" content={`看板 ${boardName} 文章列表 - 批踢踢-鄉民之力 `} />
+        <meta
+          name="description"
+          content={`看板 ${boardName} 文章列表 - 批踢踢-鄉民之力 `}
+        />
         <title>看板 {boardName} 文章列表 - 批踢踢-鄉民之力</title>
       </Helmet>
       <ActionToolbar boardName={boardName} pageStatus={pageStatus} />

@@ -30,6 +30,9 @@ const HeaderContainer = styled.div`
     }
     &:hover {
       background-color: #338;
+      @media ${(props) => props.theme.devices.mobile.mediaQuery} {
+        background-color: #0c0a66;
+      }
     }
   }
   .header {
@@ -104,7 +107,6 @@ const Layout = () => {
       });
     }
   }, [params]);
-
 
   return (
     <GlobalContext.Provider value={GlobalContextValue}>

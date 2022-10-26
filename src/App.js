@@ -10,10 +10,17 @@ const theme = {
   default: {
     devices: {
       mobile: {
-        mediaQuery: "max-width: 485px",
+        mediaQuery: "screen and (max-width: 485px)",
+        hookMediaQuery: "(max-width: 485px)",
+        color: '#f00',
       },
       tablet: {
-        mediaQuery: "max-width: 960px",
+        mediaQuery: "screen and (max-width: 960px)",
+        hookMediaQuery: "(max-width: 960px)",
+      },
+      desktop: {
+        mediaQuery: "screen and (max-width: 1200px)",
+        hookMediaQuery: "(max-width: 1200px)",
       }
     },
   },
