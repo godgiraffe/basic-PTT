@@ -149,7 +149,7 @@ const ArticleContent = () => {
           <meta property="og:title" content={article.title} />
           <meta
             property="og:description"
-            content={`批踢踢-鄉民之力 (pttwebs.com)${article.content
+            content={`${article.content
               .substring(0, 150)
               .replace(/(\r\n|\n|\r)/gm, "")}`}
           />
@@ -157,7 +157,7 @@ const ArticleContent = () => {
           <meta name="title" content={article.title} />
           <meta
             name="description"
-            content={`批踢踢-鄉民之力 (pttwebs.com)${article.content
+            content={`${article.content
               .substring(0, 150)
               .replace(/(\r\n|\n|\r)/gm, "")}`}
           />
