@@ -218,7 +218,7 @@ const addImgTag = (content, startPosition = 0) => {
     let afterContent = content.slice(endPosition, content.length);
     const isImage = /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(urlPattern);
     if (isImage === true){
-      content = prevContent + `<img src="${urlPattern}" />` + afterContent;
+      content = prevContent + `${urlPattern}\n<img src="${urlPattern}" />` + afterContent;
     }
     startPosition = endPosition;
     httpPosition = content.indexOf("http", startPosition);
