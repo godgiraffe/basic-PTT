@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useMedia } from "react-use";
 import { useParams } from "react-router-dom";
 import styled, { useTheme } from "styled-components/macro";
+import parse from 'html-react-parser';
 import AdContent from "../../components/AdContent";
 import { Helmet } from "react-helmet";
 import LoadingPage from "../../components/LoadingPage";
@@ -75,6 +76,7 @@ const ArticleContentContainer = styled.div`
       background-color: #000;
       color: #999;
       white-space: pre-line;
+      max-width: inherit;
       @media ${(props) => props.theme.devices.tablet.mediaQuery} {
         padding: 1em;
         word-break: break-all;
@@ -82,6 +84,9 @@ const ArticleContentContainer = styled.div`
       @media ${(props) => props.theme.devices.mobile.mediaQuery} {
         padding: 1em;
         word-break: break-all;
+      }
+      img {
+        max-width: inherit;
       }
     }
 
@@ -137,8 +142,7 @@ const ArticleContent = () => {
   }, []);
 
   const renderArticleContent = () => {
-    if (fetchDataStatus.gotError === true)
-      return <ErrorPage msg={fetchDataStatus.errorMsg} />;
+    if (fetchDataStatus.gotError === true) return <ErrorPage msg={fetchDataStatus.errorMsg} />;
     if (fetchDataStatus.loadComplete === false) return <LoadingPage />;
 
     return (
@@ -149,18 +153,11 @@ const ArticleContent = () => {
           <meta property="og:title" content={article.title} />
           <meta
             property="og:description"
-            content={`${article.content
-              .substring(0, 150)
-              .replace(/(\r\n|\n|\r)/gm, "")}`}
+            content={`${article.content.substring(0, 150).replace(/(\r\n|\n|\r)/gm, "")}`}
           />
           <meta name="keywords" content="Ptt BBS 批踢踢 鄉民之力" />
           <meta name="title" content={article.title} />
-          <meta
-            name="description"
-            content={`${article.content
-              .substring(0, 150)
-              .replace(/(\r\n|\n|\r)/gm, "")}`}
-          />
+          <meta name="description" content={`${article.content.substring(0, 150).replace(/(\r\n|\n|\r)/gm, "")}`} />
           <title>
             {article.title} - 看板{article.kind} - 批踢踢-鄉民之力
           </title>
@@ -196,7 +193,7 @@ const ArticleContent = () => {
                 <div className="createDate">{article.release_time}</div>
               </div>
             </div>
-            <div className="articleContent">{article.content}</div>
+            <div className="articleContent">{parse(addImgTag(article.content))}</div>
             <div className="responseDisabledInfo">推文自動更新已關閉</div>
           </div>
           <AdContent />
@@ -208,4 +205,25 @@ const ArticleContent = () => {
   return <>{renderArticleContent()}</>;
 };
 
+const addImgTag = (content, startPosition = 0) => {
+  let httpPosition = content.indexOf("http", startPosition);
+  while (httpPosition !== -1) {
+    let endPositionArr = [];
+    content.indexOf(" ", httpPosition) !== -1 && endPositionArr.push(content.indexOf(" ", httpPosition));
+    content.indexOf("\r", httpPosition) !== -1 && endPositionArr.push(content.indexOf("\r", httpPosition));
+    content.indexOf("\n", httpPosition) !== -1 && endPositionArr.push(content.indexOf("\n", httpPosition));
+    let endPosition = endPositionArr.sort((a, b) => a - b)[0];
+    let prevContent = content.slice(0, httpPosition);
+    let urlPattern = content.slice(httpPosition, endPosition);
+    let afterContent = content.slice(endPosition, content.length);
+    const isImage = /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(urlPattern);
+    if (isImage === true){
+      content = prevContent + `<img src="${urlPattern}" />` + afterContent;
+    }
+    startPosition = endPosition;
+    httpPosition = content.indexOf("http", startPosition);
+  }
+
+  return content;
+};
 export default ArticleContent;
