@@ -193,7 +193,7 @@ const ArticleContent = () => {
                 <div className="createDate">{article.release_time}</div>
               </div>
             </div>
-            <div className="articleContent">{parse(addImgTag(article.content))}</div>
+            <div className="articleContent">{article.content}{/* {parse(addImgTag(article.content))} */}</div>
             <div className="responseDisabledInfo">推文自動更新已關閉</div>
           </div>
           <AdContent />
